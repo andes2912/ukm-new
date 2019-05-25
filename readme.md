@@ -13,7 +13,7 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 ## Cara Install
 
-1 . Git Clone (copy branc) atau instal secara manual
+1 . Git Clone (copy branc) atau instal secara manual <br>
 2. composer instal atau composer update
 
 ## Security Vulnerabilities
