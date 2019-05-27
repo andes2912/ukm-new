@@ -18,6 +18,12 @@
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <!-- Morries chart CSS -->
+    <link href="{{asset('asset/plugins/morrisjs/morris.css')}}" rel="stylesheet">
+    <!-- chartist CSS -->
+    <link href="{{asset('asset/plugins/chartist-js/dist/chartist.min.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/plugins/chartist-js/dist/chartist-init.css')}}" rel="stylesheet">
+    <link href="{{asset('asset/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -343,7 +349,7 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text"> 
-                            <h5>Markarn Doe</h5>
+                            <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                             {{-- <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> --}}
@@ -384,13 +390,14 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Progja UKM<span class="label label-rouded label-themecolor pull-right">3</span></span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('progja-bem-a')}}">Program Kerja Aktif</a></li>
-                                <li><a href="{{url('progja-bem-b')}}">Progja Dibatalkan</a></li>
-                                <li><a href="{{url('progja-bem-t')}}">Progja Tertunda</a></li>
+                                {{-- <li><a href="{{url('progja-bem-b')}}">Progja Dibatalkan</a></li>
+                                <li><a href="{{url('progja-bem-t')}}">Progja Tertunda</a></li> --}}
+                                <li><a href="{{url('progja-bem-tolak-v')}}">Progja Ditolak</a></li>
                             </ul>
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Laporan</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Laporan</a></li>
+                                <li><a href="{{url('laporan-bem')}}">Laporan</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -534,6 +541,17 @@
     <script src="{{asset('asset/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
     <!--Custom JavaScript -->
     <script src="{{asset('asset/js/custom.min.js')}}"></script>
+    <!-- This is data table -->
+    <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <!--morris JavaScript -->
+    <script src="{{asset('asset/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{asset('asset/plugins/morrisjs/morris.min.js')}}"></script>
+    <script src="{{asset('asset/plugins/chartist-js/dist/chartist.min.js')}}"></script>
+    <script src="{{asset('asset/plugins/chartist-plugin-tooltip-master/dist/chartist-plugin-tooltip.min.js')}}"></script>
+
+    <!-- ChartJS -->
+    <script src="{{asset('/highchart/js/highcharts.js')}}"></script>
+    <script src="{{asset('/highchart/js/modules/exporting.js')}}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->

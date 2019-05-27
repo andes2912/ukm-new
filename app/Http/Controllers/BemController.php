@@ -14,6 +14,18 @@ class BemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
+    private $user ;
+    function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->user = \Auth::user();
+    }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         //
@@ -143,5 +155,29 @@ class BemController extends Controller
             'status' => 'Diteruskan ke KMH',
         ]);
         return $teruskan;
+    }
+
+    // View Program Kerja Ditolak
+    public function tolakbem()
+    {
+        $tolak = pengajuan::where('status','arsip')->get();
+        return view('modul_bem.progja.tolak', compact('tolak'));
+    }
+
+    // Hapus Program Kerja in view tolak
+    public function hapusbem(request $request)
+    {
+        $hapus = pengajuan::find($request->id);
+        $hapus->update([
+            'status' => 'hapus bem',
+        ]);
+        return $hapus;
+    }
+
+    // View Laporan Bem
+    public function laporanbem()
+    {
+        $laporan = pengajuan::all();
+        return view('modul_bem.laporan.index', compact('laporan'));
     }
 }

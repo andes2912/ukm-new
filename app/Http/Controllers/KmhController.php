@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\pengajuan;
+use Auth;
 
 class KmhController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    private $user ;
+    function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->user = \Auth::user();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -128,4 +141,5 @@ class KmhController extends Controller
          ]);
          return $tinjau;
      }
+
 }

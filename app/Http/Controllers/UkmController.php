@@ -4,10 +4,24 @@ namespace App\Http\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\pengajuan;
+use App\anggota;
 use Auth;
+use carbon\carbon;
 
 class UkmController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    
+    private $user ;
+    function __construct(Request $request)
+    {
+        $this->middleware('auth');
+        $this->user = \Auth::user();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -52,6 +66,7 @@ class UkmController extends Controller
             'status' => 'Pengajuan',
             'penanggungjwb' => $request->penanggungjwb,
             'deskripsi' => $request->deskripsi,
+            'tgl'       => Carbon::now()->day,
             'berkas' => $berkas
         ]);
 
@@ -116,10 +131,10 @@ class UkmController extends Controller
     // Index Program Kerja Dibatalkan
     public function progjaukmb()
     {
-        $tunda = pengajuan::where('pengaju',Auth::user()->name)
+        $batal = pengajuan::where('pengaju',Auth::user()->name)
         ->where('status','Dibatalkan')
         ->get();
-        return view('modul_ukm.progja.batal', compact('tunda'));
+        return view('modul_ukm.progja.batal', compact('batal'));
     }
 
     // Index Program Kerja Ditunda
@@ -193,5 +208,65 @@ class UkmController extends Controller
             'status' => 'Revisi Untuk KMH',
         ]);
         return $revisi;
+    }
+
+    
+    //  View Program Kerja Arsip
+    public function arsipv()
+    {
+        $arsip = pengajuan::where('status','arsip')->get();
+        return view('modul_ukm.progja.arsip', compact('arsip'));
+    }
+
+// Modul Anggota UKM
+
+    // View Anggota UKM
+    public function anggota()
+    {
+        $anggota = anggota::where('id_ukm', Auth::user()->id_user)->where('status','Aktif')->get();
+        return view('modul_ukm.anggota.index', compact('anggota'));
+    }
+
+    // Tambah Anggota UKM
+    public function createAnggota()
+    {
+        return view('modul_ukm.anggota.create');
+    }
+
+    // Store Tambah Anggota
+    public function storeanggota(Request $request)
+    {
+        $addanggota = new anggota();
+        $addanggota->nama       = $request->nama;
+        $addanggota->id_ukm     = Auth::user()->id_user;
+        $addanggota->jurusan    = $request->jurusan;
+        $addanggota->angkatan   = $request->angkatan;
+        $addanggota->alamat     = $request->alamat;
+        $addanggota->no_telp    = $request->no_telp;
+        $addanggota->status     = $request->status;
+        $addanggota->save();
+        
+        return redirect('anggota');
+    }
+
+    // Edit Tambah Anggota
+    public function editanggota(Request $request)
+    {
+        $edit = anggota::find($request->id);
+        $edit->update([
+            'nama'      => $request->nama,
+            'jurusan'   => $request->jurusan,
+            'angkatan'  => $request->angkatan,
+            'alamat'    => $request->alamat,
+            'no_telp'   => $request->no_telp,
+            'status'    => $request->status
+        ]);
+        return $edit;
+    }
+
+    // Struktur Anggota
+    public function struktur()
+    {
+        return view('modul_ukm.anggota.struktur');
     }
 }

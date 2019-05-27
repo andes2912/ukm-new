@@ -343,7 +343,7 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text"> 
-                            <h5>Markarn Doe</h5>
+                            <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                             {{-- <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> --}}
@@ -532,6 +532,7 @@
     <!--stickey kit -->
     <script src="{{asset('asset/plugins/sticky-kit-master/dist/sticky-kit.min.js')}}"></script>
     <script src="{{asset('asset/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
+    
     <!--Custom JavaScript -->
     <script src="{{asset('asset/js/custom.min.js')}}"></script>
     <!-- ============================================================== -->

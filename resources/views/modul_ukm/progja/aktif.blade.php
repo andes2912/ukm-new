@@ -73,7 +73,6 @@
                                     @elseif($item->status == "Revisi Untuk KMH")
                                         <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal Kirim Revisi</a>
                                     @elseif($item->status == "Revisi BEM")
-                                        {{-- <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-revisi="{{$item->id}}" id="click_revisi_bem" data-toggle="modal" data-target="#revisi_bem">Kirim Revisi</a> --}}
                                         <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-revisi="{{$item->id}}" id="kirim_revisi" >Kirim Revisi</a>
                                     @elseif($item->status == "Revisi Untuk BEM")
                                         <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal Kirim Revisi</a>

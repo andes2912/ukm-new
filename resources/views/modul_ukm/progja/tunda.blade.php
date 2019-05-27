@@ -28,7 +28,7 @@
                                 <td>{{$item->name}}</td>
                                 <td>{{$item->penanggungjwb}}</td>
                                 <td>{{$item->created_at->format('d-m-y')}}</td>
-                                <td>{{$item->status}}</td>
+                                <td><span class="label label-warning">{{$item->status}}</span></td>
                                 <td>
                                     <a class="btn btn-sm btn-success" data-id-ulang="{{$item->id}}" id="ulang">Ajukan</a>
                                     <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>

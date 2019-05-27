@@ -57,6 +57,14 @@ Route::resource('ukm','UkmController');
     Route::get('progja-ukm-hapus','UkmController@hapusprogja');
     Route::get('kirim-revisi-bem','UkmController@revisibem');
     Route::get('kirim-revisi-kmh','UkmController@revisikmh');
+    Route::get('progja-ukm-arsip-v','UkmController@arsipv');
+
+    // Anggota
+    Route::get('anggota','UkmController@anggota');
+    Route::get('anggota-create','UkmController@createanggota');
+    Route::post('anggota-create-store','UkmController@storeanggota');
+    Route::get('anggota-create-edit','UkmController@editanggota');
+    Route::get('struktur','UkmController@struktur');
 
     
 // Modul BEM
@@ -70,6 +78,13 @@ Route::resource('bem','BemController');
     Route::get('progja-bem-tolak','BemController@tolakprogja');
     Route::get('download-progja-bem/{id}','BemController@downberkasbem');
 
+    // Dibatalkan Ditolak Ditunda
+    Route::get('progja-bem-tolak-v','BemController@tolakbem');
+    Route::get('progja-bem-hapus','BemController@hapusbem');
+
+    // Laporan
+    Route::get('laporan-bem','BemController@laporanbem');
+
 // Modul KMH
 Route::resource('kmh','KmhController');
     // Progja
@@ -78,4 +93,5 @@ Route::resource('kmh','KmhController');
     Route::get('progja-kmh-setujui','KmhController@setujuiprogja');
     Route::get('progja-kmh-revisi','KmhController@revisiprogja');
     Route::get('progja-kmh-tolak','KmhController@tolakprogja');
+    
 

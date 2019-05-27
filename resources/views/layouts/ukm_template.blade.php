@@ -343,7 +343,7 @@
                     </div>
                     <!-- User profile text-->
                     <div class="profile-text"> 
-                            <h5>Markarn Doe</h5>
+                            <h5>{{Auth::user()->name}}</h5>
                             <a href="#" class="dropdown-toggle u-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><i class="mdi mdi-settings"></i></a>
                              <a href="app-email.html" class="" data-toggle="tooltip" title="Email"><i class="mdi mdi-gmail"></i></a>
                             {{-- <a href="pages-login.html" class="" data-toggle="tooltip" title="Logout"><i class="mdi mdi-power"></i></a> --}}
@@ -384,18 +384,15 @@
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Program Kerja <span class="label label-rouded label-themecolor pull-right">3</span></span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('progja-ukm-a')}}">Progja Aktif</a></li>
+                                <li><a href="{{url('progja-ukm-t')}}">Progja Ditunda</a></li>
                                 <li><a href="{{url('progja-ukm-b')}}">Progja Dibatalkan</a></li>
-                                <li><a href="{{url('progja-ukm-t')}}">Progja Tertunda</a></li>
+                                <li><a href="{{url('progja-ukm-arsip-v')}}">Progja Arsip</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Laporan</span></a>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Anggota</span></a>
                             <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Laporan</a></li>
-                            </ul>
-                        </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">KEMAHASISWAAN</span></a>
-                            <ul aria-expanded="false" class="collapse">
-                                <li><a href="app-calendar.html">Data Kemahasiswaan</a></li>
+                                <li><a href="{{url('anggota')}}">Anggota Aktif</a></li>
+                                <li><a href="{{url('struktur')}}">Struktur Anggota</a></li>
                             </ul>
                         </li>
                     </ul>

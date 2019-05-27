@@ -18,6 +18,8 @@
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
+    <!-- Morries chart CSS -->
+    <link href="{{asset('asset/plugins/morrisjs/morris.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -540,6 +542,9 @@
     <script src="{{asset('asset/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
     <!--Custom JavaScript -->
     <script src="{{asset('asset/js/custom.min.js')}}"></script>
+    <!--morris JavaScript -->
+    <script src="{{asset('asset/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{asset('asset/plugins/morrisjs/morris.min.js')}}"></script>
     <!-- ============================================================== -->
     <!-- Style switcher -->
     <!-- ============================================================== -->
