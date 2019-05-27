@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\pengajuan;
+use App\anggota;
 use Storage;
 use Auth;
 
@@ -120,64 +121,160 @@ class BemController extends Controller
     // Tinjau Program Kerja
     public function tinjauprogja(Request $request)
     {
-        $tinjau = pengajuan::find($request->id);
-        $tinjau->update([
-            'status' => 'Ditinjau BEM',
-        ]);
-        return $tinjau;
+        if (Auth::user()->auth == "BEM") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Ditinjau BEM',
+            ]);
+            return $tinjau;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Revisi Program Kerja
     public function revisiprogja(Request $request)
     {
-        $tinjau = pengajuan::find($request->id);
-        $tinjau->update([
-            'status' => 'Revisi BEM',
-        ]);
-        return $tinjau;
+        if (Auth::user()->auth == "BEM") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Revisi BEM',
+            ]);
+            return $tinjau;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Porgram Kerja Ditolak
     public function tolakprogja(Request $request)
     {
-        $teruskan = pengajuan::find($request->id);
-        $teruskan->update([
-            'status' => 'Ditolak BEM',
-        ]);
-        return $teruskan;
+        if (Auth::user()->auth == "BEM") {
+            $teruskan = pengajuan::find($request->id);
+            $teruskan->update([
+                'status' => 'Ditolak BEM',
+            ]);
+            return $teruskan;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Porgram Diteruskan ke Kemahasiswaan
     public function teruskanprogja(Request $request)
     {
-        $teruskan = pengajuan::find($request->id);
-        $teruskan->update([
-            'status' => 'Diteruskan ke KMH',
-        ]);
-        return $teruskan;
+        if (Auth::user()->auth == "BEM") {
+            $teruskan = pengajuan::find($request->id);
+            $teruskan->update([
+                'status' => 'Diteruskan ke KMH',
+            ]);
+            return $teruskan;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // View Program Kerja Ditolak
     public function tolakbem()
     {
-        $tolak = pengajuan::where('status','arsip')->get();
-        return view('modul_bem.progja.tolak', compact('tolak'));
+        if (Auth::user()->auth == "BEM") {
+            $tolak = pengajuan::where('status','arsip')->get();
+            return view('modul_bem.progja.tolak', compact('tolak'));
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Hapus Program Kerja in view tolak
     public function hapusbem(request $request)
     {
-        $hapus = pengajuan::find($request->id);
-        $hapus->update([
-            'status' => 'hapus bem',
-        ]);
-        return $hapus;
+        if (Auth::user()->auth == "BEM") {
+            $hapus = pengajuan::find($request->id);
+            $hapus->update([
+                'status' => 'hapus bem',
+            ]);
+            return $hapus;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // View Laporan Bem
     public function laporanbem()
     {
-        $laporan = pengajuan::all();
-        return view('modul_bem.laporan.index', compact('laporan'));
+       if (Auth::user()->auth == "BEM") {
+            $laporan = pengajuan::all();
+            return view('modul_bem.laporan.index', compact('laporan'));
+       } else {
+           return redirect('/home');
+       }
+       
+    }
+// Anggota BEM
+    // View Anggota Bem
+    public function anggotabem()
+    {
+        if (Auth::user()->auth == "BEM") {
+            $anggota = anggota::where('status','Aktif')->where('id_ukm', Auth::user()->id_user)->get();
+            return view('modul_bem.anggota.aktif', compact('anggota'));
+        } else {
+            return redirect('/home');
+        }
+        
+    }
+
+    public function addanggotabem()
+    {
+        if (Auth::user()->auth == "BEM") {
+            return view('modul_bem.anggota.add');
+        } else {
+            return redirect('/home');
+        }
+        
+    }
+
+    public function storeanggotaukm(Request $request)
+    {
+        if (Auth::user()->auth == "BEM") {
+            $addanggota = new anggota();
+            $addanggota->nama       = $request->nama;
+            $addanggota->id_ukm     = Auth::user()->id_user;
+            $addanggota->jurusan    = $request->jurusan;
+            $addanggota->angkatan   = $request->angkatan;
+            $addanggota->alamat     = $request->alamat;
+            $addanggota->no_telp    = $request->no_telp;
+            $addanggota->status     = $request->status;
+            $addanggota->save();
+
+            return redirect('anggota-bem');
+        } else {
+            return redirect('/home');
+        }
+    }
+
+    public function editanggotabem(Request $request)
+    {
+        if (Auth::user()->auth == "BEM") {
+            $editanggota = anggota::find($request->id);
+            $editanggota->update([
+                'nama'      => $request->nama,
+            'jurusan'   => $request->jurusan,
+            'angkatan'  => $request->angkatan,
+            'alamat'    => $request->alamat,
+            'no_telp'   => $request->no_telp,
+            'status'    => $request->status
+            ]);
+
+            return $editanggota;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 }

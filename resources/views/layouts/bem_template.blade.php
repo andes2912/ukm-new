@@ -395,6 +395,12 @@
                                 <li><a href="{{url('progja-bem-tolak-v')}}">Progja Ditolak</a></li>
                             </ul>
                         </li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Data BEM</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{url('anggota-bem')}}">Anggota Aktif</a></li>
+                                <li><a href="{{url('struktur-bem')}}">Struktur Anggota</a></li>
+                            </ul>
+                        </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Laporan</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('laporan-bem')}}">Laporan</a></li>

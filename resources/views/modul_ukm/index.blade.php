@@ -1,145 +1,215 @@
 @extends('layouts.ukm_template')
 @section('title','Dashboard UKM')
 @section('content')
-<div class="card-group">
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="m-b-0"><i class="mdi mdi-briefcase-check text-info"></i></h2>
-                    <h3 class="">2456</h3>
-                    <h6 class="card-subtitle">New Projects</h6></div>
-                <div class="col-12">
-                    <div class="progress">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 85%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="m-b-0"><i class="mdi mdi-alert-circle text-success"></i></h2>
-                    <h3 class="">546</h3>
-                    <h6 class="card-subtitle">Pending Project</h6></div>
-                <div class="col-12">
-                    <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 40%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="m-b-0"><i class="mdi mdi-wallet text-purple"></i></h2>
-                    <h3 class="">$24561</h3>
-                    <h6 class="card-subtitle">Total Cost</h6></div>
-                <div class="col-12">
-                    <div class="progress">
-                        <div class="progress-bar bg-primary" role="progressbar" style="width: 56%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Column -->
-    <!-- Column -->
-    <div class="card">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-12">
-                    <h2 class="m-b-0"><i class="mdi mdi-buffer text-warning"></i></h2>
-                    <h3 class="">$30010</h3>
-                    <h6 class="card-subtitle">Total Earnings</h6></div>
-                <div class="col-12">
-                    <div class="progress">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 26%; height: 6px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Row -->
 <div class="row">
-    <!-- Column -->
-    <div class="col-lg-8 col-xlg-9">
+    <div class="col-lg-6 col-md-6">
+        <!-- LINE CHART -->
         <div class="card">
             <div class="card-body">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="d-flex flex-wrap">
-                            <div>
-                                <h4 class="card-title">Yearly Earning</h4>
-                            </div>
-                            <div class="ml-auto">
-                                <ul class="list-inline">
-                                    <li>
-                                        <h6 class="text-muted text-success"><i class="fa fa-circle font-10 m-r-10 "></i>Sales</h6> </li>
-                                    <li>
-                                        <h6 class="text-muted  text-info"><i class="fa fa-circle font-10 m-r-10"></i>Earning ($)</h6> </li>
-                                </ul>
-                            </div>
-                        </div>
+            {{-- <h4 class="card-title m-b-0">Grafik Jumlah Pengajuan Program kerja</h4> --}}
+        </div>
+            <div class="card-body">
+            <div class="amp-pxl m-t-130" style="height: 320px;" id="linechart"></div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+    </div>
+    <div class="col-lg-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Anggota Aktif</h4>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-up text-success"></i>  {{$aktif}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark8"></div>
                     </div>
-                    <div class="col-12">
-                        <div id="earning" style="height: 355px;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Laki-laki</h4>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-down text-danger"></i>  {{$laki}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark9"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Anggota Non-aktif</h4>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-up text-success"></i> {{$nonaktif}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark10"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Column -->
-    <div class="col-lg-4 col-xlg-3">
-        <div class="card card-inverse card-info">
+    <div class="col-lg-3">
+        <div class="card">
             <div class="card-body">
+                <h4 class="card-title">Dewan Pimbimbing</h4>
                 <div class="d-flex">
-                    <div class="m-r-20 align-self-center">
-                        <h1 class="text-white"><i class="ti-light-bulb"></i></h1></div>
-                    <div>
-                        <h3 class="card-title">Sales Analytics</h3>
-                        <h6 class="card-subtitle">March  2017</h6> </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 align-self-center">
-                        <h2 class="font-light text-white"><sup><small><i class="ti-arrow-up"></i></small></sup>35487</h2>
-                    </div>
-                    <div class="col-6 p-t-10 p-b-20 text-right">
-                        <div class="spark-count" style="height:65px"></div>
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-up text-success"></i>  {{$dp}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark11"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="card card-inverse card-success">
+        <div class="card">
             <div class="card-body">
+                <h4 class="card-title">Perempuan</h4>
                 <div class="d-flex">
-                    <div class="m-r-20 align-self-center">
-                        <h1 class="text-white"><i class="ti-pie-chart"></i></h1></div>
-                    <div>
-                        <h3 class="card-title">Bandwidth usage</h3>
-                        <h6 class="card-subtitle">March  2017</h6> </div>
-                </div>
-                <div class="row">
-                    <div class="col-6 align-self-center">
-                        <h2 class="font-light text-white">50 GB</h2>
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-down text-danger"></i>  {{$perempuan}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark12"></div>
                     </div>
-                    <div class="col-6 p-t-10 p-b-20 text-right align-self-center">
-                        <div class="spark-count2" style="height:65px"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Keseluruhan</h4>
+                <div class="d-flex">
+                    <div class="align-self-center">
+                        <h4 class="font-medium m-b-0"><i class="ti-angle-up text-success"></i> {{$all}}</h4></div>
+                    <div class="ml-auto">
+                        <div id="spark13"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Column -->
 </div>
-<!-- Row -->
+@endsection
+@section('scripts')
+<script type="text/javascript">
+$(function () {
+    "use strict";
+// ============================================================== 
+    // sparkline chart
+    // ==============================================================
+    var sparklineLogin = function() { 
+       
+       $('.spark-count').sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
+           type: 'bar'
+           , width: '100%'
+           , height: '70'
+           , barWidth: '2'
+           , resize: true
+           , barSpacing: '6'
+           , barColor: 'rgba(255, 255, 255, 0.3)'
+       });
+       
+       $('.spark-count2').sparkline([4, 5, 0, 10, 9, 12, 4, 9, 4, 5, 3, 10, 9, 12, 10, 9, 12, 4, 9], {
+           type: 'bar'
+           , width: '100%'
+           , height: '70'
+           , barWidth: '2'
+           , resize: true
+           , barSpacing: '6'
+           , barColor: 'rgba(255, 255, 255, 0.3)'
+       });
+       
+       $('#spark8').sparkline([ 4, 5, 0, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#26c6da'
+       });
+        $('#spark9').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#ef5350'
+       });
+         $('#spark10').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#7460ee'
+       });
+        $('#spark11').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#7460ee'
+       });
+       $('#spark12').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#26c6da'
+       });
+       $('#spark13').sparkline([ 0, 5, 6, 10, 9, 12, 4, 9], {
+           type: 'bar',
+           width: '100%',
+           height: '40',
+           barWidth: '4',
+           resize: true,
+           barSpacing: '5',
+           barColor: '#ef5350'
+       });
+  }
+   var sparkResize;
+
+       $(window).resize(function(e) {
+           clearTimeout(sparkResize);
+           sparkResize = setTimeout(sparklineLogin, 500);
+       });
+       sparklineLogin();
+    });
+
+    $(function () {
+        $('#linechart').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Grafik Jumlah Pengajuan Program kerja'
+            },
+
+            credits: {enabled: false},
+            xAxis: {
+                categories: ['Grafik Jumlah Pengajuan Program kerja'],
+                crosshair: true
+            },series: [{
+                name: 'Pengajuan',
+                data: [{{$pengajuan}}]
+            },{
+                name: 'Ditolak',
+                data: [{{$tolak}}]
+            },{
+                name: 'Disetujui',
+                data: [{{$setujui}}]
+            }]
+        });
+    });
+</script>
 @endsection

@@ -12,7 +12,6 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
-                            <th>Alamat</th>
                             <th>No. Telp</th>
                             <th>Jurusan</th>
                             <th>Jabatan</th>
@@ -27,7 +26,6 @@
                            <tr>
                                <td>{{$no}}</td>
                                <td>{{$item->nama}}</td>
-                               <td>{{$item->alamat}}</td>
                                <td>{{$item->no_telp}}</td>
                                <td>
                                    @if ($item->jurusan == "TI")
@@ -43,8 +41,8 @@
                                <td>
                                    @if ($item->jabatan == "")
                                        <span class="label label-warning">Belum Dipilih</span>
-                                   @elseif($item->jabatan == "Ketum")
-                                    <span class="label label-warning">Ketua Umum</span>
+                                   @else
+                                    <span class="label label-primary">{{$item->jabatan}}</span>
                                    @endif
                                </td>
                                <td>{{$item->angkatan}}</td>
@@ -57,8 +55,9 @@
                                         <span class="label label-warning">Pembimbing</span>
                                    @endif
                                </td>
-                               <td>
-                                   <a href="" class="btn btn-sm btn-info">Add Jabatan</a>
+                               <td align="center">
+                                   @if ($item->jabatan == "")
+                                   <a id="addjabatan" data-id-jabatan={{$item->id}} data-id-names={{$item->nama}} data-target="#tampiljab" data-toggle="modal" class="btn btn-sm btn-info" style="color:white">Add Jabatan</a>
                                    <a data-id={{$item->id}} 
                                         data-id-name={{$item->nama}}
                                         data-id-alamat={{$item->alamat}}
@@ -67,6 +66,16 @@
                                         data-id-angkatan={{$item->angkatan}}
                                         data-id-status={{$item->status}}
                                     class="btn btn-sm btn-warning" data-toggle="modal" data-target="#tampil" id="edit" style="color:white" >Edit</a>
+                                   @else
+                                   <a data-id={{$item->id}} 
+                                        data-id-name={{$item->nama}}
+                                        data-id-alamat={{$item->alamat}}
+                                        data-id-no={{$item->no_telp}}
+                                        data-id-jur={{$item->jurusan}}
+                                        data-id-angkatan={{$item->angkatan}}
+                                        data-id-status={{$item->status}}
+                                    class="btn btn-sm btn-warning" data-toggle="modal" data-target="#tampil" id="edit" style="color:white" >Edit</a>
+                                   @endif
                                </td>
                            </tr>
                         <?php $no++; ?>
@@ -75,6 +84,7 @@
                 </table>
                 @include('modul_ukm.anggota.edit')
             </div>
+            @include('modul_ukm.anggota.addjab')
         </div>
     </div>
 </div>
@@ -124,6 +134,36 @@ $(document).on('click','#simpan', function(){
         $("#jurusan").val(''); 
         $("#angkatan").val(''); 
         $("#status").val('');  
+        location.reload();
+    });
+ });
+
+//  Tampilkan Form Tambah Jabatan
+$(document).on('click','#addjabatan', function(){
+    var id = $(this).attr('data-id-jabatan');
+    var nama = $(this).attr('data-id-names');
+    var jabatan = $(this).attr('data-id-jab');
+    $("#id").val(id)
+    $("#name").val(nama)
+    $("#jabatan").val(jabatan)
+});
+
+// Proses Tambah Jabatan
+$(document).on('click','#simpan_jabatan', function(){
+    var id = $("#id").val();
+    var nama = $("#name").val();
+    var jabatan = $("#jabatan").val();
+
+$.get('{{Url("anggota-add-jabatan")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id:id,jabatan:jabatan,nama:nama}, function(resp){
+            swal({
+            html :  "Berhasil Edit Harga",
+            showConfirmButton :  false,
+            type: "success",
+            timer: 1000 
+            });
+        $("#id").val(''); 
+        $("#name").val('');
+        $("#jabatan").val('');
         location.reload();
     });
  });

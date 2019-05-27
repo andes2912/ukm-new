@@ -22,6 +22,7 @@ class CreateAnggotasTable extends Migration
             $table->string('jabatan')->nullable();
             $table->string('alamat');
             $table->string('no_telp');
+            $table->string('gender');
             $table->string('status');
             $table->timestamps();
         });

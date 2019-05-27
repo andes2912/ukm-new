@@ -18,6 +18,9 @@
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link href="{{asset('asset/plugins/Magnific-Popup-master/dist/magnific-popup.css')}}" rel="stylesheet">
+     <!-- morris CSS -->
+     <link href="{{asset('asset/plugins/morrisjs/morris.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -393,6 +396,7 @@
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('anggota')}}">Anggota Aktif</a></li>
                                 <li><a href="{{url('struktur')}}">Struktur Anggota</a></li>
+                                <li><a href="{{url('dp')}}">Dewan Pembimbing</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -541,7 +545,15 @@
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
-
+    <!-- Magnific popup JavaScript -->
+    <script src="{{asset('asset/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js')}}"></script>
+    <script src="{{asset('asset/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js')}}"></script>
+    {{-- Morris --}}
+    <script src="{{asset('asset/plugins/raphael/raphael-min.js')}}"></script>
+    <script src="{{asset('asset/plugins/morrisjs/morris.min.js')}}"></script>
+    <!-- ChartJS -->
+    <script src="{{asset('/highchart/js/highcharts.js')}}"></script>
+    <script src="{{asset('/highchart/js/modules/exporting.js')}}"></script>
     @yield('scripts')
 </body>
 

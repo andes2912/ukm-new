@@ -8,7 +8,7 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2>2376 <i class=" font-14 text-danger"></i></h2>
+                    <div class="col-8"><h2>{{$ukm}} <i class=" font-14 text-danger"></i></h2>
                         <h6>Jumlah UKM</h6></div>
                     <div class="col-4 align-self-center text-right  p-l-0">
                         <div id="sparklinedash3"></div>
@@ -23,7 +23,7 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2 class="">3670 <i class=" font-14 text-success"></i></h2>
+                    <div class="col-8"><h2 class="">{{$anggota}} <i class=" font-14 text-success"></i></h2>
                         <h6>Jumlah Anggota UKM</h6></div>
                     <div class="col-4 align-self-center text-right p-l-0">
                         <div id="sparklinedash"></div>
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <!-- Row -->
                 <div class="row">
-                    <div class="col-8"><h2>1562 <i class=" font-14 text-success"></i></h2>
+                    <div class="col-8"><h2>{{$bem}} <i class=" font-14 text-success"></i></h2>
                         <h6>Jumlah Anggota BEM</h6></div>
                     <div class="col-4 align-self-center text-right p-l-0">
                         <div id="sparklinedash2"></div>

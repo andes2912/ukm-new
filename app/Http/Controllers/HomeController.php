@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 use App\pengajuan;
+use App\user;
+use App\anggota;
 
 class HomeController extends Controller
 {
@@ -30,7 +32,30 @@ class HomeController extends Controller
             if (Auth::user()->auth === "Admin") {
                 return view('modul_admin.index');
             } elseif(Auth::user()->auth === "UKM") {
-                return view('modul_ukm.index');
+                $setujui = pengajuan::whereIn('status',['Disetujui KMH','Disetujui BEM'])
+                ->where('pengaju',Auth::user()->name)
+                ->count();
+                $tolak = pengajuan::whereIn('status',['Ditolak KMH','Ditolak BEM'])
+                ->where('pengaju',Auth::user()->name)
+                ->count();
+                $pengajuan = pengajuan::all()
+                ->where('pengaju',Auth::user()->name)
+                ->count();
+                $aktif = anggota::where('status','Aktif')
+                ->where('id_ukm',Auth::user()->id_user)->count();
+                $dp = anggota::where('status','Pembimbing')
+                ->where('id_ukm',Auth::user()->id_user)->count();
+                $laki = anggota::where('status','Aktif')
+                ->where('gender','L')
+                ->where('id_ukm',Auth::user()->id_user)->count();
+                $perempuan = anggota::where('status','Aktif')
+                ->where('gender','P')
+                ->where('id_ukm',Auth::user()->id_user)->count();
+                $nonaktif = anggota::where('status','Non-Aktif')
+                ->where('id_ukm',Auth::user()->id_user)->count();
+                $all = anggota::where('id_ukm',Auth::user()->id_user)->count();
+                return view('modul_ukm.index', compact('setujui','tolak','pengajuan','aktif','dp','laki','perempuan','nonaktif','all'));
+
             } elseif(Auth::user()->auth === "BEM") {
 
                 $data = DB::table('pengajuans')
@@ -57,11 +82,13 @@ class HomeController extends Controller
                     }
                 }
 
-                $setujui = pengajuan::whereIn('status',['Disetujui KMH,Diteruskan ke KMH'])->count();
+                $setujui = pengajuan::whereIn('status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
                 $tolak = pengajuan::where('status','Ditolak BEM')->count();
                 $all = pengajuan::count();
-                return view('modul_bem.index', compact('setujui','tolak','all'))
-                // -> with('setujui')
+                $ukm = user::where('auth','UKM')->count();
+                $anggota = anggota::where('status','Aktif')->whereNotIn('id_ukm', [Auth::user()->id_user])->count();
+                $bem = anggota::where('status','Aktif')->where('id_ukm', Auth::user()->id_user)->count();
+                return view('modul_bem.index', compact('setujui','tolak','all','ukm','anggota','bem'))
                 -> with('_tanggal', substr($tanggal, 0,-1))
                 -> with('_nilai', substr($nilai, 0, -1));
 

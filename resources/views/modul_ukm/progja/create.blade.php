@@ -1,4 +1,4 @@
-@extends('layouts.admin_template')
+@extends('layouts.ukm_template')
 @section('title','Pengajuan Program Kerja')
 @section('content')
 @section('header','Pengajuan Program Kerja')

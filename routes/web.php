@@ -65,6 +65,8 @@ Route::resource('ukm','UkmController');
     Route::post('anggota-create-store','UkmController@storeanggota');
     Route::get('anggota-create-edit','UkmController@editanggota');
     Route::get('struktur','UkmController@struktur');
+    Route::get('dp','UkmController@dp');
+    Route::get('anggota-add-jabatan','UkmController@addjabatan');
 
     
 // Modul BEM
@@ -81,6 +83,11 @@ Route::resource('bem','BemController');
     // Dibatalkan Ditolak Ditunda
     Route::get('progja-bem-tolak-v','BemController@tolakbem');
     Route::get('progja-bem-hapus','BemController@hapusbem');
+
+    // Anggota
+    Route::get('anggota-bem','BemController@anggotabem');
+    Route::get('anggota-bem-add','BemController@addanggotabem');
+    Route::get('anggota-bem-edit','BemController@editanggotabem');
 
     // Laporan
     Route::get('laporan-bem','BemController@laporanbem');
