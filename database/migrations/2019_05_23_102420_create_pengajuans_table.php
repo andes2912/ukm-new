@@ -18,6 +18,8 @@ class CreatePengajuansTable extends Migration
             $table->string('no_id');
             $table->string('name');
             $table->string('status');
+            $table->string('status_bem')->nullable();
+            $table->string('status_kmh')->nullable();
             $table->string('penaggungjwb');
             $table->string('berkas');
             $table->string('pengaju');

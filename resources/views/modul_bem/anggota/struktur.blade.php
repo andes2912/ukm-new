@@ -1,4 +1,4 @@
-@extends('layouts.ukm_template')
+@extends('layouts.bem_template')
 @section('title','Struktur Anggota')
 @section('header','Struktur Anggota')
 @section('content')
@@ -12,7 +12,7 @@
                         <div class="el-overlay scrl-dwn">
                             <ul class="el-info">
                                 <li><a class="btn default btn-outline image-popup-vertical-fit" href="#"><i class="icon-magnifier"></i></a></li>
-                                <li><a class="btn default btn-outline" href="{{url('profile', $item->id)}}"><i class="icon-link"></i></a></li>
+                                <li><a class="btn default btn-outline" href="{{url('profile-bem', $item->id)}}"><i class="icon-link"></i></a></li>
                             </ul>
                         </div>
                     </div>

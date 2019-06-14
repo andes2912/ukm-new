@@ -35,7 +35,7 @@ class HomeController extends Controller
                 $setujui = pengajuan::whereIn('status',['Disetujui KMH','Disetujui BEM'])
                 ->where('pengaju',Auth::user()->name)
                 ->count();
-                $tolak = pengajuan::whereIn('status',['Ditolak KMH','Ditolak BEM'])
+                $tolak = pengajuan::whereIn('status',['Ditolak KMH','Ditolak BEM','arsip'])
                 ->where('pengaju',Auth::user()->name)
                 ->count();
                 $pengajuan = pengajuan::all()
@@ -88,12 +88,49 @@ class HomeController extends Controller
                 $ukm = user::where('auth','UKM')->count();
                 $anggota = anggota::where('status','Aktif')->whereNotIn('id_ukm', [Auth::user()->id_user])->count();
                 $bem = anggota::where('status','Aktif')->where('id_ukm', Auth::user()->id_user)->count();
+
                 return view('modul_bem.index', compact('setujui','tolak','all','ukm','anggota','bem'))
                 -> with('_tanggal', substr($tanggal, 0,-1))
                 -> with('_nilai', substr($nilai, 0, -1));
 
             } elseif(Auth::user()->auth === "KMH") {
-                return view('modul_kmh.index');
+
+                $data = DB::table('pengajuans')
+                ->  select('tgl', DB::raw('count(id) AS jml'))
+                ->  whereYear('created_at','=',date("Y", strtotime(now())))
+                ->  whereMonth('created_at','=',date("m", strtotime(now())))
+                ->  groupBy('tgl')
+                ->  get();
+
+                $tanggal = '';
+                $batas =  31;
+                $nilai = '';
+                for($_i=1; $_i <= $batas; $_i++){
+                    $tanggal = $tanggal . (string)$_i . ',';
+                    $_check = false;
+                    foreach($data as $_data){
+                        if((int)@$_data->tgl === $_i){
+                            $nilai = $nilai . (string)$_data->jml . ',';
+                            $_check = true;
+                        }
+                    }
+                    if(!$_check){
+                        $nilai = $nilai . '0,';
+                    }
+                }
+
+                $setujui = pengajuan::whereIn('status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
+                $tolak = pengajuan::where('status','Ditolak KMH')->count();
+                $all = pengajuan::count();
+                $ukm = user::where('auth','UKM')->count();
+                $anggota = anggota::where('status','Aktif')->whereNotIn('id_ukm', [Auth::user()->id_user])->count();
+                $bem = anggota::selectRaw('anggotas.id,anggotas.id_ukm, anggotas.status,a.id_user')
+                ->leftJoin('Users as a' , 'a.id_user' , '=' ,'anggotas.id_ukm')
+                ->where('anggotas.status','Aktif')
+                ->count();
+                return view('modul_kmh.index', compact('setujui','tolak','all','ukm','anggota','bem'))
+                -> with('_tanggal', substr($tanggal, 0,-1))
+                -> with('_nilai', substr($nilai, 0, -1));
             } else {
                 Auth::logout();
             }

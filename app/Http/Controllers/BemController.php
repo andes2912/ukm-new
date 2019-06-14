@@ -275,6 +275,58 @@ class BemController extends Controller
         } else {
             return redirect('/home');
         }
-        
+    }
+
+    // Tambah Jabatan BEM
+    public function addjabatanbem(Request $request)
+    {
+        if (Auth::user()->auth == "BEM") {
+            $addjabatan  = anggota::find($request->id);
+            $addjabatan->update([
+                'jabatan' => $request->jabatan,
+            ]);
+            return $addjabatan;
+        } else {
+            return redirect('home');
+        }
+    }
+
+    // Struktur BEM
+    public function strukturbem()
+    {
+        if (Auth::user()->auth == "BEM") {
+            $struktur = anggota::whereNotIn('jabatan',[''])->where('id_ukm',Auth::user()->id_user)->get();
+            return view('modul_bem.anggota.struktur', compact('struktur'));
+        } else {
+            return redirect('home');
+        }
+    }
+
+    // Data Profile
+    public function profilebem($id)
+    {
+        if (Auth::user()->auth == "BEM") {
+            $anggota = anggota::where('id_ukm', Auth::user()->id_user)
+            ->where('status','Aktif')
+            ->orderBy('id','DESC')
+            ->first()->find($id);
+            return view('modul_bem.anggota.profile', compact('anggota'));
+        } else {
+            return redirect('home');
+        }
+    }
+
+    // Data DP
+    public function dpbem()
+    {
+        if (Auth::user()->auth == "BEM") {
+            $dp = anggota::where('id_ukm',Auth::user()->id_user)
+            ->where('status','Pembimbing')
+            ->orderBy('id','DESC')
+            ->get();
+            return view('modul_bem.anggota.dp', compact('dp'));
+        } else {
+            return redirect('/home');
+        }
     }
 }

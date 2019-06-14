@@ -385,4 +385,19 @@ class UkmController extends Controller
             return redirect('/home');
         }
     }
+
+    // Data Profile
+    public function profile($id)
+    {
+        if (Auth::user()->auth == "UKM") {
+            $anggota = anggota::where('id_ukm', Auth::user()->id_user)
+            ->where('status','Aktif')
+            ->orderBy('id','DESC')
+            ->first()->find($id);
+            return view('modul_ukm.anggota.profile', compact('anggota'));
+        } else {
+            return redirect('/home');
+        }
+        
+    }
 }

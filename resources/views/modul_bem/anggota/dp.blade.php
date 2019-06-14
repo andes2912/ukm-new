@@ -1,11 +1,10 @@
-@extends('layouts.ukm_template')
+@extends('layouts.bem_template')
 @section('title','Dewan Pembimbing')
 @section('header','Data Dewan Pembimbing')
 @section('content')
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title"><a href="{{url('anggota-create')}}" class="btn btn-primary">Tambah</a></h4>
             <div class="table-responsive">
                 <table class="table color-table dark-table table-hover">
                     <thead>

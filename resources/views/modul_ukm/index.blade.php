@@ -92,6 +92,81 @@
         </div>
     </div>
 </div>
+<div class="row">
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <button class="pull-right btn btn-sm btn-rounded btn-success" data-toggle="modal" data-target="#myModal">Tambah</button>
+                <h4 class="card-title">Program Kerja Harian </h4>
+            <div class="comment-widgets m-b-20">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row">
+                    <div class="comment-text active w-100">
+                        <h5>James Anderson</h5>
+                        <div class="comment-footer">
+                            <span class="date">April 14, 2016</span>
+                            <span class="label label-info">Pending</span> <span class="action-icons active">
+                                <a href="javascript:void(0)"><i class="mdi mdi-pencil-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-checkbox-marked-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-heart"></i></a>    
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @include('modul_ukm.kegiatan.add')
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <button class="pull-right btn btn-sm btn-rounded btn-info" data-toggle="modal" data-target="#myModal">Tambah</button>
+                <h4 class="card-title">Program Kerja Mingguan</h4>
+            <div class="comment-widgets m-b-20">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row">
+                    <div class="comment-text active w-100">
+                        <h5>James Anderson</h5>
+                        <div class="comment-footer">
+                            <span class="date">April 14, 2016</span>
+                            <span class="label label-info">Pending</span> <span class="action-icons active">
+                                <a href="javascript:void(0)"><i class="mdi mdi-pencil-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-checkbox-marked-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-heart"></i></a>    
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-body">
+                <button class="pull-right btn btn-sm btn-rounded btn-primary" data-toggle="modal" data-target="#myModal">Tambah</button>
+                <h4 class="card-title">Program Kerja Bulanan</h4>
+            <div class="comment-widgets m-b-20">
+                <!-- Comment Row -->
+                <div class="d-flex flex-row comment-row">
+                    <div class="comment-text active w-100">
+                        <h5>James Anderson</h5>
+                        <div class="comment-footer">
+                            <span class="date">April 14, 2016</span>
+                            <span class="label label-info">Pending</span> <span class="action-icons active">
+                                <a href="javascript:void(0)"><i class="mdi mdi-pencil-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-checkbox-marked-circle"></i></a>
+                                <a href="javascript:void(0)"><i class="mdi mdi-heart"></i></a>    
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('scripts')
 <script type="text/javascript">

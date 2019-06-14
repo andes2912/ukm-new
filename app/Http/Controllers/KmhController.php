@@ -98,48 +98,84 @@ class KmhController extends Controller
 
     public function progjakmha()
     {
-        $aktif = pengajuan::whereIn('status',['Diteruskan ke KMH','Ditinjau KMH','Disetujui KMH','Direvisi KMH','Revisi Untuk KMH','Ditolak KMH'])->get();
-        return view('modul_kmh.progja.aktif', compact('aktif'));
+        if (Auth::user()->auth == "KMH") {
+            $aktif = pengajuan::whereIn('status',['Diteruskan ke KMH','Ditinjau KMH','Disetujui KMH','Direvisi KMH','Revisi Untuk KMH','Ditolak KMH'])->get();
+            return view('modul_kmh.progja.aktif', compact('aktif'));
+        } else {
+            return redirect('/home');
+        }
+        
+    }
+
+    public function progjakmht()
+    {
+        if (Auth::user()->auth == "KMH") {
+            $tolak = pengajuan::whereIn('status',['Ditolak KMH','Ditolak BEM'])->get();
+            return view('modul_kmh.progja.tolak', compact('tolak'));
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
     // Program Kerja Ditinjau KMH
     public function tinjauprogja(Request $request)
     {
-        $tinjau = pengajuan::find($request->id);
-        $tinjau->update([
-            'status' => 'Ditinjau KMH',
-        ]);
-        return $tinjau;
+        if (Auth::user()->auth == "KMH") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Ditinjau KMH',
+            ]);
+            return $tinjau;
+        } else {
+            return redirect('/home');
+        }
+        
     }
 
      // Program Kerja Disetujui KMH
      public function setujuiprogja(Request $request)
      {
-         $tinjau = pengajuan::find($request->id);
-         $tinjau->update([
-             'status' => 'Disetujui KMH',
-         ]);
-         return $tinjau;
+        if (Auth::user()->auth == "KMH") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Disetujui KMH',
+            ]);
+            return $tinjau;
+        } else {
+            return redirect('/home');
+        }
+        
      }
 
      // Program Kerja Direvisi KMH
      public function revisiprogja(Request $request)
      {
-         $tinjau = pengajuan::find($request->id);
-         $tinjau->update([
-             'status' => 'Direvisi KMH',
-         ]);
-         return $tinjau;
+         if (Auth::user()->auth == "KMH") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Direvisi KMH',
+            ]);
+            return $tinjau;
+         } else {
+             return redirect('/home');
+         }
+         
      }
 
      // Program Kerja Ditolak KMH
      public function tolakprogja(Request $request)
      {
-         $tinjau = pengajuan::find($request->id);
-         $tinjau->update([
-             'status' => 'Ditolak KMH',
-         ]);
-         return $tinjau;
+         if (Auth::user()->auth == "KMH") {
+            $tinjau = pengajuan::find($request->id);
+            $tinjau->update([
+                'status' => 'Ditolak KMH',
+            ]);
+            return $tinjau;
+         } else {
+            return redirect('/home');
+         }
+         
      }
 
 }

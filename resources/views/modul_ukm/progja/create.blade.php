@@ -41,7 +41,6 @@
                                         <select class="form-control custom-select" name="penanggungjwb">
                                             <option value="">--Pilih Penanggung Jawab--</option>
                                             <option value="ukm">UKM</option>
-                                            {{-- <option value="0">Tidak Aktif</option> --}}
                                         </select>
                                     </div>
                                 </div>
