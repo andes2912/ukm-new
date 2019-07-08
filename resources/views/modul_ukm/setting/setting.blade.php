@@ -1,12 +1,11 @@
 @extends('layouts.ukm_template')
-@section('title','Tambah Anggota')
-@section('header','Form Tambah Anggota')
+@section('title','Setting Data UKM')
 @section('content')
 <div class="row">
     <div class="col-lg-12">
         <div class="card card-outline-info">
             <div class="card-header">
-                <h4 class="m-b-0 text-white">Form Tambah Anggota</h4>
+                <h4 class="m-b-0 text-white">Setting Data UKM</h4>
             </div>
             <div class="card-body">
                 <form action="{{url('anggota-create-store')}}" method="POST" class="form-horizontal">
@@ -94,5 +93,4 @@
             </div>
         </div>
     </div>
-</div>
 @endsection

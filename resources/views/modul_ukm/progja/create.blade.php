@@ -38,10 +38,14 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3">Penanggung Jawab :</label>
                                     <div class="col-md-9">
-                                        <select class="form-control custom-select" name="penanggungjwb">
+                                        {{-- <select class="form-control custom-select" name="penanggungjwb">
                                             <option value="">--Pilih Penanggung Jawab--</option>
                                             <option value="ukm">UKM</option>
-                                        </select>
+                                        </select> --}}
+                                        <?php
+                                            $jwb = App\Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
+                                        ?>
+                                        <input type="text" class="form-control" name="penanggungjwb" value="{{$jwb->nama}}" readonly>
                                     </div>
                                 </div>
                             </div>

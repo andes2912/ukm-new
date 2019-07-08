@@ -17,7 +17,8 @@
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
+    <link href="{{asset('asset/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
     <link href="{{asset('asset/plugins/Magnific-Popup-master/dist/magnific-popup.css')}}" rel="stylesheet">
      <!-- morris CSS -->
      <link href="{{asset('asset/plugins/morrisjs/morris.css')}}" rel="stylesheet">
@@ -50,7 +51,7 @@
                 <!-- Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="{{route('home')}}">
                         <!-- Logo icon --><b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
@@ -239,6 +240,11 @@
                                 <li><a href="{{url('dp')}}">Dewan Pembimbing</a></li>
                             </ul>
                         </li>
+                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">Setting</span></a>
+                            <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{url('set-data-ukm')}}">Data UKM</a></li>
+                            </ul>
+                        </li>
                     </ul>
                 </nav>
                 <!-- End Sidebar navigation -->
@@ -384,7 +390,8 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> --}}
+    <script src="{{asset('asset/plugins/sweetalert/sweetalert.min.js')}}"></script>
     <!-- Magnific popup JavaScript -->
     <script src="{{asset('asset/plugins/Magnific-Popup-master/dist/jquery.magnific-popup.min.js')}}"></script>
     <script src="{{asset('asset/plugins/Magnific-Popup-master/dist/jquery.magnific-popup-init.js')}}"></script>

@@ -109,7 +109,7 @@ class BemController extends Controller
     public function progjabema()
     {
        if (Auth::user()->auth === "BEM") {
-            $aktif = pengajuan::whereIn('status',['Pengajuan','Pengajuan Ulang','Ditinjau BEM','Revisi BEM','Revisi Untuk BEM','Ditolak BEM','Diteruskan ke KMH','Revisi','Ditolak','Disetujui'])
+            $aktif = pengajuan::whereIn('status',['Pengajuan','Pengajuan Ulang','Ditinjau BEM','Revisi BEM','Revisi Untuk BEM','Ditolak BEM','Diteruskan ke KMH','Revisi','Ditolak','Disetujui','Ditinjau KMH'])
             ->get();
             return view('modul_bem.progja.aktif', compact('aktif'));
        } else {
@@ -139,7 +139,7 @@ class BemController extends Controller
         if (Auth::user()->auth == "BEM") {
             $tinjau = pengajuan::find($request->id);
             $tinjau->update([
-                'status' => 'Revisi BEM',
+                'status_bem' => 'Revisi BEM',
             ]);
             return $tinjau;
         } else {
@@ -154,7 +154,7 @@ class BemController extends Controller
         if (Auth::user()->auth == "BEM") {
             $teruskan = pengajuan::find($request->id);
             $teruskan->update([
-                'status' => 'Ditolak BEM',
+                'status_bem' => 'Ditolak BEM',
             ]);
             return $teruskan;
         } else {
@@ -169,7 +169,7 @@ class BemController extends Controller
         if (Auth::user()->auth == "BEM") {
             $teruskan = pengajuan::find($request->id);
             $teruskan->update([
-                'status' => 'Diteruskan ke KMH',
+                'status_bem' => 'Diteruskan ke KMH',
             ]);
             return $teruskan;
         } else {

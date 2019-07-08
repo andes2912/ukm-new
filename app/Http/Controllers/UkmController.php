@@ -57,6 +57,7 @@ class UkmController extends Controller
             $this->validate($request, [
                 'berkas' => 'required|file|max:2000'
             ]);
+            $jwb = Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
             $noid = pengajuan::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(8)) , 8,"1") as no_id')-> first();
             $upload = $request->file('berkas');  
             $berkas = $upload->store('public/storage');
@@ -395,6 +396,16 @@ class UkmController extends Controller
             ->orderBy('id','DESC')
             ->first()->find($id);
             return view('modul_ukm.anggota.profile', compact('anggota'));
+        } else {
+            return redirect('/home');
+        } 
+    }
+
+    // Setting Data UKM
+    public function setDataUkm()
+    {
+        if (Auth::user()->auth == "UKM") {
+            return view('modul_ukm.setting.setting');
         } else {
             return redirect('/home');
         }

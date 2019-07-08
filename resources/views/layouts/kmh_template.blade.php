@@ -17,7 +17,8 @@
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
+    <link href="{{asset('asset/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -381,7 +382,8 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> --}}
+    <script src="{{asset('asset/plugins/sweetalert/sweetalert.min.js')}}"></script>
 
     @yield('scripts')
 </body>

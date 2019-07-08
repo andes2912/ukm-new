@@ -13,7 +13,8 @@
     <title>@yield('title')</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{asset('asset/plugins/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+    <link href="{{asset('asset/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
     <!-- Custom CSS -->
     <link href="{{asset('asset/css/style.css')}}" rel="stylesheet">
     <!-- You can change the theme colors from here -->
@@ -385,7 +386,8 @@
     <!-- Style switcher -->
     <!-- ============================================================== -->
     <script src="{{asset('asset/plugins/styleswitcher/jQuery.style.switcher.js')}}"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="{{asset('asset/plugins/sweetalert/sweetalert.min.js')}}"></script>
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"> --}}
     <!-- This is data table -->
     <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     @yield('scripts')

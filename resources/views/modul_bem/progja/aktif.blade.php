@@ -47,6 +47,8 @@
                                         <span class="label label-warning">Revisi Terkirim</span>
                                     @elseif($item->status == "Ditolak BEM")
                                         <span class="label label-danger">Ditolak</span>
+                                    @elseif($item->status == "Ditinjau KMH")
+                                        <span class="label label-success">Diserahkan KMH</span>
                                     @endif
                                 </td>
                                 <td>
@@ -64,6 +66,8 @@
                                         <a href="{{url('download-progja-bem',$item->id)}}" class="btn btn-sm btn-info">Berkas Revisi</a>
                                     @elseif($item->status == "Ditolak BEM")
                                         <a href="{{url('download-progja-bem',$item->id)}}" class="btn btn-sm btn-danger">Berkas Ditolak</a>
+                                    @elseif($item->status == "Ditinjau KMH")
+                                        <a href="{{url('download-progja-bem',$item->id)}}" class="btn btn-sm btn-success">Lihat Berkas</a>
                                     @endif
                                 </td>
                                 <td>
@@ -94,10 +98,12 @@
                                         <a class="btn btn-sm btn-danger" data-id-tolak="{{$item->id}}" id="tolak" style="color:white">Tolak</a>
                                     @elseif($item->status == "Ditolak BEM")
                                         <button class="btn btn-sm btn-danger disabled">Ditolak</button>
-                                   @else
-                                   <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">Tunda</a>
-                                   <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
-                                   @endif
+                                    @elseif($item->status == "Ditinjau KMH")
+                                        <span class="label label-success">Diserahkan KMH</span>
+                                    @else
+                                    <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">Tunda</a>
+                                    <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
+                                    @endif
                                 </td>
                             </tr>
                         <?php $no++; ?>

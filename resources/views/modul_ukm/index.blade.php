@@ -267,12 +267,12 @@ $(function () {
                 type: 'column'
             },
             title: {
-                text: 'Grafik Jumlah Pengajuan Program kerja'
+                text: 'Grafik Jumlah Program kerja'
             },
 
             credits: {enabled: false},
             xAxis: {
-                categories: ['Grafik Jumlah Pengajuan Program kerja'],
+                categories: ['Grafik Jumlah Program kerja'],
                 crosshair: true
             },series: [{
                 name: 'Pengajuan',

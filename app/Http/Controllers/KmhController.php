@@ -139,7 +139,7 @@ class KmhController extends Controller
         if (Auth::user()->auth == "KMH") {
             $tinjau = pengajuan::find($request->id);
             $tinjau->update([
-                'status' => 'Disetujui KMH',
+                'status_kmh' => 'Disetujui KMH',
             ]);
             return $tinjau;
         } else {
@@ -154,7 +154,7 @@ class KmhController extends Controller
          if (Auth::user()->auth == "KMH") {
             $tinjau = pengajuan::find($request->id);
             $tinjau->update([
-                'status' => 'Direvisi KMH',
+                'status_kmh' => 'Direvisi KMH',
             ]);
             return $tinjau;
          } else {
@@ -169,7 +169,7 @@ class KmhController extends Controller
          if (Auth::user()->auth == "KMH") {
             $tinjau = pengajuan::find($request->id);
             $tinjau->update([
-                'status' => 'Ditolak KMH',
+                'status_kmh' => 'Ditolak KMH',
             ]);
             return $tinjau;
          } else {

@@ -29,7 +29,7 @@
                                 <td>{{$item->penanggungjwb}}</td>
                                 <td>{{$item->created_at->format('d-m-y')}}</td>
                                 <td>
-                                    @if ($item->status == "Pengajuan")
+                                    {{-- @if ($item->status == "Pengajuan")
                                         <span class="label label-primary">Berhasil Dikirim</span>
                                     @elseif($item->status == "Ditinjau BEM")
                                         <span class="label label-info">Sedang Ditinjau BEM</span>
@@ -53,10 +53,33 @@
                                         <span class="label label-danger">Program Kerja Ditolak BEM</span>
                                     @elseif($item->status == "Ditolak KMH")
                                         <span class="label label-danger">Program Kerja Ditolak KMH</span>
+                                    @endif --}}
+                                    @if ($item->status == "Pengajuan")
+                                        <span class="label label-primary">Berhasil Dikirim</span>
+                                        @elseif($item->status == "Ditinjau BEM")
+                                            @if ($item->status_bem == "Diteruskan ke KMH")
+                                                <span class="label label-info">Diteruskan ke KMH</span>
+                                            @elseif($item->status_bem == "Ditolak BEM")
+                                                <span class="label label-danger">Program Kerja Ditolak BEM</span>
+                                            @elseif($item->status_bem == "Revisi BEM")
+                                                <span class="label label-warning">Revisi Dari BEM</span>
+                                            @else
+                                                <span class="label label-info">Sedang Ditinjau BEM</span>
+                                            @endif
+                                        @elseif($item->status == "Ditinjau KMH")
+                                            @if($item->status_kmh == "Disetujui KMH")
+                                                <span class="label label-success">Program Kerja Disetujui</span>
+                                            @elseif($item->status_kmh == "Direvisi KMH")
+                                                <span class="label label-warning">Revisi Dari KMH</span>
+                                            @elseif($item->status_kmh == "Ditolak KMH")
+                                                <span class="label label-danger">Program Kerja Ditolak KMH</span>
+                                            @else
+                                                <span class="label label-info">Sedang Ditinjau KMH</span>
+                                            @endif
                                     @endif
                                 </td>
                                 <td>
-                                    @if ($item->status == "Ditinjau BEM")
+                                    {{-- @if ($item->status == "Ditinjau BEM")
                                         <button class="btn btn-sm btn-success disabled">Tunda</button>
                                         <button class="btn btn-sm btn-warning disabled">Batal</button>
                                     @elseif($item->status == "Diteruskan ke KMH")
@@ -83,6 +106,33 @@
                                     @else
                                         <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">Tunda</a>
                                         <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
+                                    @endif --}}
+                                    @if ($item->status == "Pengajuan")
+                                        <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">TundaOK</a>
+                                        <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
+                                    @elseif($item->status == "Ditinjau BEM")
+                                        @if ($item->status_bem == "Ditolak BEM")
+                                            <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
+                                        @elseif($item->status_bem == "Revisi BEM")
+                                            <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-revisi="{{$item->id}}" id="kirim_revisi" >Kirim Revisi</a>
+                                        @elseif($item->status_bem == "Diteruskan ke KMH")
+                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
+                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
+                                        @else
+                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
+                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
+                                        @endif
+                                    @elseif($item->status == "Ditinjau KMH")
+                                        @if($item->status_kmh == "Disetujui KMH")
+                                            <span class="label label-success">Approved</span>
+                                        @elseif($item->status_kmh == "Direvisi KMH")
+                                            <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-rev="{{$item->id}}" id="revisi_kmh" >Kirim Revisi</a>
+                                        @elseif($item->status_kmh == "Ditolak KMH")
+                                            <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
+                                        @else
+                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
+                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
+                                        @endif
                                     @endif
                                 </td>
                             </tr>

@@ -69,6 +69,9 @@ Route::resource('ukm','UkmController');
     Route::get('anggota-add-jabatan','UkmController@addjabatan');
     Route::get('profile/{id}','UkmController@profile');
 
+    // Setting
+    Route::get('set-data-ukm','UkmController@setDataUkm');
+
     
 // Modul BEM
 Route::resource('bem','BemController');
