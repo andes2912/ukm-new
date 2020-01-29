@@ -101,21 +101,54 @@ class BemController extends Controller
     // Download Berkas Program Kerja
     public function downberkasbem($id)
     {
-        $down = pengajuan::find($id);
-        return  Storage::download($down->berkas, $down->name);
+        // $down = pengajuan::find($id);
+        // return  Storage::download($down->berkas, $down->name);
+        $entry = pengajuan::find($id);
+        $pathToFile = public_path('/berkas/' . $entry->berkas);
+        return response()->download($pathToFile);   
+        
     }
 
     // Modul Program Kerja Aktif
     public function progjabema()
     {
        if (Auth::user()->auth === "BEM") {
-            $aktif = pengajuan::whereIn('status',['Pengajuan','Pengajuan Ulang','Ditinjau BEM','Revisi BEM','Revisi Untuk BEM','Ditolak BEM','Diteruskan ke KMH','Revisi','Ditolak','Disetujui','Ditinjau KMH'])
+            $aktif = pengajuan::selectRaw('pengajuans.*,a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->where('id_status','P20')
             ->get();
             return view('modul_bem.progja.aktif', compact('aktif'));
        } else {
            return redirect('home');
        }
-       
+    }
+
+    // Modul Program Baru
+    public function bemnew()
+    {
+        if (auth::user()->auth === "BEM") {
+            $baru = pengajuan::selectRaw('pengajuans.*, a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->where('id_status','B101')->get();
+            return view('modul_bem.progja.baru', compact('baru'));
+        } else {
+            return redirect('home');
+        }
+    }
+
+
+    // Setujui Program Kerja ke KMH
+    public function setujuiBem(Request $request)
+    {
+        if (auth::user()->auth == "BEM") {
+            $setujui = pengajuan::find($request->id);
+            $setujui->update([
+                'id_status' => 'K101',
+            ]);
+            return $setujui;
+        }
     }
 
     // Tinjau Program Kerja

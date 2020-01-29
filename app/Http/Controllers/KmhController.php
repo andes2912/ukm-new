@@ -96,6 +96,20 @@ class KmhController extends Controller
         //
     }
 
+    // Program Kerja Baru
+    public function kmhnew()
+    {
+        if (auth::user()->auth == "KMH") {
+            $baru = pengajuan::selectRaw('pengajuans.*,a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->where('id_status','K101')
+            ->get();
+            return view('modul_kmh.progja.baru', compact('baru'));
+        }
+    }
+
+    // Program Kerja Aktif
     public function progjakmha()
     {
         if (Auth::user()->auth == "KMH") {
@@ -116,6 +130,18 @@ class KmhController extends Controller
             return redirect('/home');
         }
         
+    }
+
+    // Program Kerja Disetujui KMH
+    public function setujuikmh(Request $request)
+    {
+        if (auth::user()->auth == "KMH") {
+            $setujui = pengajuan::find($request->id);
+            $setujui->update([
+                'id_status' => 'P10',
+            ]);
+            return $setujui;
+        }
     }
 
     // Program Kerja Ditinjau KMH

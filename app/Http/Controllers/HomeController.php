@@ -32,14 +32,14 @@ class HomeController extends Controller
             if (Auth::user()->auth === "Admin") {
                 return view('modul_admin.index');
             } elseif(Auth::user()->auth === "UKM") {
-                $setujui = pengajuan::whereIn('status',['Disetujui KMH','Disetujui BEM'])
-                ->where('pengaju',Auth::user()->name)
+                $setujui = pengajuan::whereIn('id_status',['Disetujui KMH','Disetujui BEM'])
+                ->where('iduser',Auth::user()->id)
                 ->count();
-                $tolak = pengajuan::whereIn('status',['Ditolak KMH','Ditolak BEM','arsip'])
-                ->where('pengaju',Auth::user()->name)
+                $tolak = pengajuan::whereIn('id_status',['Ditolak KMH','Ditolak BEM','arsip'])
+                ->where('iduser',Auth::user()->id)
                 ->count();
                 $pengajuan = pengajuan::all()
-                ->where('pengaju',Auth::user()->name)
+                ->where('iduser',Auth::user()->id_user)
                 ->count();
                 $aktif = anggota::where('status','Aktif')
                 ->where('id_ukm',Auth::user()->id_user)->count();
@@ -82,8 +82,8 @@ class HomeController extends Controller
                     }
                 }
 
-                $setujui = pengajuan::whereIn('status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
-                $tolak = pengajuan::where('status','Ditolak BEM')->count();
+                $setujui = pengajuan::whereIn('id_status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
+                $tolak = pengajuan::where('id_status','Ditolak BEM')->count();
                 $all = pengajuan::count();
                 $ukm = user::where('auth','UKM')->count();
                 $anggota = anggota::where('status','Aktif')->whereNotIn('id_ukm', [Auth::user()->id_user])->count();
@@ -119,8 +119,8 @@ class HomeController extends Controller
                     }
                 }
 
-                $setujui = pengajuan::whereIn('status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
-                $tolak = pengajuan::where('status','Ditolak KMH')->count();
+                $setujui = pengajuan::whereIn('id_status',['Disetujui KMH' ,'Diteruskan ke KMH'])->count();
+                $tolak = pengajuan::where('id_status','Ditolak KMH')->count();
                 $all = pengajuan::count();
                 $ukm = user::where('auth','UKM')->count();
                 $anggota = anggota::where('status','Aktif')->whereNotIn('id_ukm', [Auth::user()->id_user])->count();

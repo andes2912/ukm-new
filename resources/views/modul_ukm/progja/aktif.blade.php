@@ -5,9 +5,13 @@
 <div class="col-lg-12">
     <div class="card">
         <div class="card-body">
+            @if ($cekAnggota == '')
+            <h4 class="card-title"><a href="{{url('anggota-create')}}" class="btn btn-success">Tambah Anggota</a></h4>
+            @else
             <h4 class="card-title"><a href="{{route('ukm.create')}}" class="btn btn-primary">Tambah</a></h4>
-            <div class="table-responsive">
-                <table class="table color-table dark-table table-hover">
+            @endif
+            <div class="table-responsive m-t-0">
+                <table id="myTable" class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -24,115 +28,22 @@
                         @foreach ($progja as $item)
                             <tr style="color:black">
                                 <td>{{$no}}</td>
-                                <td style="font-weight:bold">{{$item->no_id}}</td>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->penanggungjwb}}</td>
-                                <td>{{$item->created_at->format('d-m-y')}}</td>
+                                <td>{{$item->no_pengajuan}}</td>
                                 <td>
-                                    {{-- @if ($item->status == "Pengajuan")
-                                        <span class="label label-primary">Berhasil Dikirim</span>
-                                    @elseif($item->status == "Ditinjau BEM")
-                                        <span class="label label-info">Sedang Ditinjau BEM</span>
-                                    @elseif($item->status == "Diteruskan ke KMH")
-                                        <span class="label label-success">Diteruskan ke KMH</span>
-                                    @elseif($item->status == "Pengajuan Ulang")
-                                        <span class="label label-warning">Pengajuan Ulang</span>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <span class="label label-info">Sedang Ditinjau KMH</span>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <span class="label label-success">Program Kerja Disetujui</span>
-                                    @elseif($item->status == "Direvisi KMH")
-                                        <span class="label label-warning">Revisi Dari KMH</span>
-                                    @elseif($item->status == "Revisi Untuk KMH")
-                                        <span class="label label-warning">Revisi Terkirim</span>
-                                    @elseif($item->status == "Revisi BEM")
-                                        <span class="label label-warning">Revisi Dari BEM</span>
-                                    @elseif($item->status == "Revisi Untuk BEM")
-                                        <span class="label label-info">Revisi Terkirim</span>
-                                    @elseif($item->status == "Ditolak BEM")
-                                        <span class="label label-danger">Program Kerja Ditolak BEM</span>
-                                    @elseif($item->status == "Ditolak KMH")
-                                        <span class="label label-danger">Program Kerja Ditolak KMH</span>
-                                    @endif --}}
-                                    @if ($item->status == "Pengajuan")
-                                        <span class="label label-primary">Berhasil Dikirim</span>
-                                        @elseif($item->status == "Ditinjau BEM")
-                                            @if ($item->status_bem == "Diteruskan ke KMH")
-                                                <span class="label label-info">Diteruskan ke KMH</span>
-                                            @elseif($item->status_bem == "Ditolak BEM")
-                                                <span class="label label-danger">Program Kerja Ditolak BEM</span>
-                                            @elseif($item->status_bem == "Revisi BEM")
-                                                <span class="label label-warning">Revisi Dari BEM</span>
-                                            @else
-                                                <span class="label label-info">Sedang Ditinjau BEM</span>
-                                            @endif
-                                        @elseif($item->status == "Ditinjau KMH")
-                                            @if($item->status_kmh == "Disetujui KMH")
-                                                <span class="label label-success">Program Kerja Disetujui</span>
-                                            @elseif($item->status_kmh == "Direvisi KMH")
-                                                <span class="label label-warning">Revisi Dari KMH</span>
-                                            @elseif($item->status_kmh == "Ditolak KMH")
-                                                <span class="label label-danger">Program Kerja Ditolak KMH</span>
-                                            @else
-                                                <span class="label label-info">Sedang Ditinjau KMH</span>
-                                            @endif
-                                    @endif
+                                    <a href="" >{{$item->judul}}</a>
                                 </td>
+                                <td>{{$item->pic}}</td>
+                                <td>{{$item->created_at->format('d-m-y')}}</td>
+                                <td>{{$item->nama_status}}</td>
                                 <td>
-                                    {{-- @if ($item->status == "Ditinjau BEM")
-                                        <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                        <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                    @elseif($item->status == "Diteruskan ke KMH")
-                                        <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                        <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                        <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                        <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                    @elseif($item->status == "Direvisi KMH")
-                                        <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-rev="{{$item->id}}" id="revisi_kmh" >Kirim Revisi</a>
-                                    @elseif($item->status == "Revisi Untuk KMH")
-                                        <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal Kirim Revisi</a>
-                                    @elseif($item->status == "Revisi BEM")
-                                        <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-revisi="{{$item->id}}" id="kirim_revisi" >Kirim Revisi</a>
-                                    @elseif($item->status == "Revisi Untuk BEM")
-                                        <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal Kirim Revisi</a>
-                                    @elseif($item->status == "Ditolak BEM")
-                                        <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
-                                    @elseif($item->status == "Ditolak KMH")
-                                        <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
-                                    @else
-                                        <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">Tunda</a>
-                                        <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
-                                    @endif --}}
-                                    @if ($item->status == "Pengajuan")
-                                        <a class="btn btn-sm btn-success" data-id-tunda="{{$item->id}}" id="tunda">TundaOK</a>
-                                        <a class="btn btn-sm btn-warning" data-id-batal="{{$item->id}}" id="batal">Batal</a>
-                                    @elseif($item->status == "Ditinjau BEM")
-                                        @if ($item->status_bem == "Ditolak BEM")
-                                            <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
-                                        @elseif($item->status_bem == "Revisi BEM")
-                                            <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-revisi="{{$item->id}}" id="kirim_revisi" >Kirim Revisi</a>
-                                        @elseif($item->status_bem == "Diteruskan ke KMH")
-                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                        @else
-                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                        @endif
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        @if($item->status_kmh == "Disetujui KMH")
-                                            <span class="label label-success">Approved</span>
-                                        @elseif($item->status_kmh == "Direvisi KMH")
-                                            <a class="btn btn-sm btn-success" data-id-name="{{$item->name}}" data-id-rev="{{$item->id}}" id="revisi_kmh" >Kirim Revisi</a>
-                                        @elseif($item->status_kmh == "Ditolak KMH")
-                                            <a class="btn btn-sm btn-warning" data-id-arsip="{{$item->id}}" id="arsip">Arsipkan</a>
-                                        @else
-                                            <button class="btn btn-sm btn-success disabled">Tunda</button>
-                                            <button class="btn btn-sm btn-warning disabled">Batal</button>
-                                        @endif
+                                    @if ($item->id_status == "P00")
+                                        <a class="btn btn-primary btn-sm text-white" data-id-konfirmasi="{{$item->id}}" id="konfirmasi">Konfirmasi</a>
+                                    @elseif($item->id_status == "B101")
+                                        <button disabled="disabled" class="btn btn-info btn-sm">Berkas Terkirim</button>
+                                    @elseif($item->id_status == "P10")
+                                        <a class="btn btn-info btn-sm" data-id-mulai="{{$item->id}}" id="mulai">Mulai</a>
+                                    @elseif($item->id_status == "P20")
+                                        <a href="" class="btn btn-info btn-sm">Selesai</a>
                                     @endif
                                 </td>
                             </tr>
@@ -148,18 +59,47 @@
 @endsection
 @section('scripts')
 <script type="text/javascript">
+
+    // Konfirmasi Berkas
+    $(document).on('click','#konfirmasi', function () {
+        var id = $(this).attr('data-id-konfirmasi');
+        $.get(' {{Url("progja-ukm-a-konfirmasi")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+            swal({
+                html : "Berhasil Ubah Status Diterima",
+                showConfirmButton : false,
+                type : "success",
+                timer : 1000
+            });
+            location.reload();
+        });
+    });
+
+    // Mulai Jalankan Progja
+    $(document).on('click','#mulai', function () {
+        var id = $(this).attr('data-id-mulai');
+        $.get(' {{Url("progja-ukm-mulai")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+            swal({
+                html : "Berhasil Ubah Status Diterima",
+                showConfirmButton : false,
+                type : "success",
+                timer : 1000
+            });
+            location.reload();
+        });
+    });
+
     // Tunda Program Kerja
     $(document).on('click','#tunda', function () {
-    var id = $(this).attr('data-id-tunda');
-    $.get(' {{Url("progja-ukm-a-tunda")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        swal({
-            html : "Berhasil Ubah Status Diterima",
-            showConfirmButton : false,
-            type : "success",
-            timer : 1000
+        var id = $(this).attr('data-id-tunda');
+        $.get(' {{Url("progja-ukm-a-tunda")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
+            swal({
+                html : "Berhasil Ubah Status Diterima",
+                showConfirmButton : false,
+                type : "success",
+                timer : 1000
+            });
+            location.reload();
         });
-        location.reload();
-    });
     });
 
     // Batal Program Kerja
@@ -218,37 +158,5 @@
         location.reload();
     });
     });
-
-    // Kirim Revisi Untuk BEM
-//     $(document).on('click','#click_revisi_bem', function(){
-//         var id = $(this).attr('data-id-revisi');
-//         $("#id_revisi").val(id)
-//         var nama = $(this).attr('data-id-name');
-//         $("#name").val(nama)
-//     });
-
-//     $(document).on('click','#kirim_revisi', function(){
-//     var id_revisi = $("#id_revisi").val();
-//     var status = $("#status").val();
-    
-//     if (status == "") {
-//             swal({
-//                 html: "Silakan Isi Nilai !"
-//             });
-//     }else{
-//         $.get('{{Url("kirim-revisi-bem")}}',{'_token': $('meta[name=csrf-token]').attr('content'),id_revisi:id_revisi}, function(resp){
-//                 swal({
-//                 html :  "Berhasil Memberikan Nilai",
-//                 showConfirmButton :  false,
-//                 type: "success",
-//                 timer: 1000 
-//                 });
-//             $("#id_revisi").val(''); 
-//             $("#status").val('');
-//             location.reload();
-//         });
-//     }
-        
-//  });
 </script>
 @endsection

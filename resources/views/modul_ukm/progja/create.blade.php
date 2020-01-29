@@ -19,7 +19,7 @@
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3">Program Kerja :</label>
                                     <div class="col-md-9">
-                                        <input type="text" class="form-control" name="name" placeholder="Masukan Nama Program kerja">
+                                        <input type="text" class="form-control" name="judul" placeholder="Masukan Nama Program kerja">
                                     </div>
                                 </div>
                             </div>
@@ -34,27 +34,17 @@
                         </div>
                         <div class="row">
                             <!--/span-->
-                            <div class="col-md-6">
-                                <div class="form-group row">
-                                    <label class="control-label text-right col-md-3">Penanggung Jawab :</label>
-                                    <div class="col-md-9">
-                                        {{-- <select class="form-control custom-select" name="penanggungjwb">
-                                            <option value="">--Pilih Penanggung Jawab--</option>
-                                            <option value="ukm">UKM</option>
-                                        </select> --}}
-                                        <?php
-                                            $jwb = App\Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
-                                        ?>
-                                        <input type="text" class="form-control" name="penanggungjwb" value="{{$jwb->nama}}" readonly>
-                                    </div>
-                                </div>
-                            </div>
+
+                                <?php
+                                    $jwb = App\Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
+                                ?>
+                                <input type="hidden" class="form-control" name="pic" value="{{$jwb->id}}" readonly>
                             <!--/span-->
                             <div class="col-md-6">
                                 <div class="form-group row">
                                     <label class="control-label text-right col-md-3">Deskripsi :</label>
                                     <div class="col-md-9">
-                                        <textarea name="deskripsi" id="" cols="54" rows="2"></textarea>
+                                        <textarea name="deskripsi" class="form-control" rows="2"></textarea>
                                     </div>
                                 </div>
                             </div>

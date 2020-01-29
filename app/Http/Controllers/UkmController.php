@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\pengajuan;
-use App\anggota;
+use App\Anggota;
 use Auth;
 use carbon\carbon;
 
@@ -54,29 +54,38 @@ class UkmController extends Controller
     public function store(Request $request)
     {
         if (Auth::user()->auth == "UKM") {
-            $this->validate($request, [
-                'berkas' => 'required|file|max:2000'
-            ]);
-            $jwb = Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
-            $noid = pengajuan::selectRaw('LPAD(CONVERT(COUNT("id") + 1, char(8)) , 8,"1") as no_id')-> first();
-            $upload = $request->file('berkas');  
-            $berkas = $upload->store('public/storage');
-            $pnt = pengajuan::create([
-                'name' => $request->name,
-                'no_id' => '#P' . $noid->no_id,
-                'pengaju' => Auth::user()->name,
-                'status' => 'Pengajuan',
-                'penanggungjwb' => $request->penanggungjwb,
-                'deskripsi' => $request->deskripsi,
-                'tgl'       => Carbon::now()->day,
-                'berkas' => $berkas
-            ]);
-    
+
+            $no = carbon::now();
+            $no->year;
+            $no->month;
+            $no->day;
+            $no->minute;
+            $no->second;
+
+            $berkas = $request->file('berkas');
+            $nama_file = time()."_".$berkas->getClientOriginalName();
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'berkas';
+            $berkas->move($tujuan_upload,$nama_file);
+            
+            $pengajuan = new pengajuan;
+            $pengajuan->judul = $request->judul;
+            $pengajuan->no_pengajuan = '#P' .mt_rand(1000, 9999). '/' .$no->day. '/' .$no->month. '/' .$no->year;
+            $pengajuan->iduser = Auth::user()->id_user;
+            $pengajuan->id_status = 'P00';
+            $pengajuan->pic = $request->pic;
+            $pengajuan->deskripsi = $request->deskripsi;
+            $pengajuan->tgl = Carbon::now()->day;
+            $pengajuan->bln = Carbon::now()->month;
+            $pengajuan->thn = Carbon::now()->year;
+            $pengajuan->berkas = $nama_file;
+            $pengajuan->save();
+            // dd($pengajuan);
+        
             return redirect('progja-ukm-a');
         } else {
             return redirect('/home');
         }
-        
     }
 
     /**
@@ -134,14 +143,39 @@ class UkmController extends Controller
     public function progjaukma()
     {
         if (Auth::user()->auth == "UKM") {
-            $progja = pengajuan::where('pengaju',Auth::user()->name)
-            ->whereIn('status',['Pengajuan','Pengajuan Ulang','Ditinjau BEM','Diteruskan ke KMH','Ditinjau KMH','Disetujui KMH','Direvisi KMH','Revisi Untuk KMH','Revisi BEM','Revisi Untuk BEM','Ditolak BEM','Disetujui','Ditolak KMH'])
+            $progja = pengajuan::selectRaw('pengajuans.*, a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->where('iduser',auth::user()->id_user)
             ->get();
-            return view('modul_ukm.progja.aktif', compact('progja'));
+            $cekAnggota = Anggota::where('jabatan','Ketua Umum')->where('id_ukm', Auth::user()->id_user)->first();
+            return view('modul_ukm.progja.aktif', compact('progja','cekAnggota'));
         } else {
             return redirect('/home');
         }
-        
+    }
+
+    // Konfirmasi Program Kerja Pengajuan
+    public function konfirmasi(Request $request)
+    {
+        $konfirmasi = pengajuan::find($request->id);
+        $konfirmasi->update([
+            'id_status' => 'B101',
+        ]);
+
+        return $konfirmasi;
+    }
+
+    // Mulai Jalankan Progja
+    public function mulai(Request $request)
+    {
+        if (auth::user()->auth == "UKM") {
+            $mulai = pengajuan::find($request->id);
+            $mulai->update([
+                'id_status' => 'P20'
+            ]);
+            return $mulai;
+        }
     }
 
     // Index Program Kerja Dibatalkan
@@ -155,7 +189,6 @@ class UkmController extends Controller
         } else {
             return redirect('/home');
         }
-        
     }
 
     // Index Program Kerja Ditunda
@@ -184,7 +217,6 @@ class UkmController extends Controller
         } else {
             return redirect('/home');
         }
-        
     }
 
     // Batal Program Kerja
@@ -214,7 +246,6 @@ class UkmController extends Controller
        } else {
            return redirect('/home');
        }
-       
     }
 
     // Program Kerja Dihapus/arsipkan
@@ -229,21 +260,20 @@ class UkmController extends Controller
        } else {
             return redirect('/home');
        }
-       
     }
 
     // Revisi Program kerja ke BEM
     public function revisibem(Request $request)
-    {if (Auth::user()->auth == "UKM") {
-        $revisi = pengajuan::find($request->id);
-        $revisi->update([
-            'status' => 'Revisi Untuk BEM',
-        ]);
-        return $revisi;
-    } else {
-        return redirect('/home');
-    }
-    
+    {
+        if (Auth::user()->auth == "UKM") {
+            $revisi = pengajuan::find($request->id);
+            $revisi->update([
+                'status' => 'Revisi Untuk BEM',
+            ]);
+            return $revisi;
+        } else {
+            return redirect('/home');
+        }
     }
 
     // Revisi Program kerja ke BEM
@@ -258,7 +288,6 @@ class UkmController extends Controller
        } else {
            return redirect('/home');
        }
-       
     }
 
     

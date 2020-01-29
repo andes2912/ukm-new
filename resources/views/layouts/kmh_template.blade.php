@@ -223,6 +223,7 @@
                         </li>
                         <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">Program Kerja </span></a>
                             <ul aria-expanded="false" class="collapse">
+                                <li><a href="{{url('progja-kmh-new')}}">Program Kerja Baru</a></li>
                                 <li><a href="{{url('progja-kmh-a')}}">Program Kerja Aktif</a></li>
                                 <li><a href="{{url('progja-kmh-t')}}">Program Kerja Ditolak</a></li>
                             </ul>

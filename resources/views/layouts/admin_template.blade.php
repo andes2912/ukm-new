@@ -218,22 +218,26 @@
                 <!-- Sidebar navigation-->
                 <nav class="sidebar-nav">
                     <ul id="sidebarnav">
-                         <li class="nav-devider"></li>
-                         <li> <a href="{{url('/admin')}}"><i class="mdi mdi-gauge"></i><span >Dashboard</span></a>
+                        <li class="nav-devider"></li>
+                        <li> 
+                            <a href="{{url('/admin')}}"><i class="mdi mdi-gauge"></i><span >Dashboard</span></a>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">UKM <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
+                        <li> 
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-gauge"></i><span class="hide-menu">UKM <span class="label label-rouded label-themecolor pull-right">4</span></span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('admin-ukm')}}">Data UKM</a></li>
                                 <li><a href="{{url('admin-progja-ukm')}}">Program Kerja</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">BEM</span>
-                        </a>
+                        <li> 
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">BEM</span>
+                            </a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('admin-bem')}}">Data BEM</a></li>
                             </ul>
                         </li>
-                        <li> <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">KEMAHASISWAAN</span></a>
+                        <li> 
+                            <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i class="mdi mdi-bullseye"></i><span class="hide-menu">KEMAHASISWAAN</span></a>
                             <ul aria-expanded="false" class="collapse">
                                 <li><a href="{{url('admin-kmh')}}">Data Kemahasiswaan</a></li>
                             </ul>

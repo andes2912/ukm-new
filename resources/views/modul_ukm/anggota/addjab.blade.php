@@ -18,13 +18,18 @@
                         <input type="hidden" name="id" id="id">
                         <div class="form-group">
                             <label for="message-text" class="control-label">Jabatan :</label>
-                            <input type="text" name="jabatan" id="jabatan" class="form-control">
+                            {{-- <input type="text" name="jabatan" id="jabatan" class="form-control"> --}}
+                            <select name="jabatan" id="jabatan" class="form-control">
+                                <option value="">Pilih Jabatan</option>
+                                <option value="Ketua Umum">Ketua Umum</option>
+                                <option value="Bendahara">Bendahara</option>
+                            </select>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="simpan_jabatan">Edit</button>
+                <button type="button" class="btn btn-success" id="simpan_jabatan">Update</button>
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
             </div>
         </div>
