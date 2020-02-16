@@ -14,7 +14,6 @@
                             <th>Program Kerja</th>
                             <th>Pengaju</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,47 +21,10 @@
                         @foreach ($aktif as $item)
                             <tr style="color:black">
                                 <td>{{$no}}</td>
-                                <td style="font-weight:bold">{{$item->no_id}}</td>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->pengaju}}</td>
-                                <td>
-                                    @if ($item->status == "Diteruskan ke KMH")
-                                        <span class="label label-info">Butuh Ditinjau</span>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <a href="{{url('download-berkas', $item->id)}}" class="btn btn-sm btn-info">Lihat Berkas</a>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <span class="label label-success">Proposal Disetujui</span>
-                                    @elseif($item->status == "Direvisi KMH")
-                                        <span class="label label-warning">Revisi Terkirim</span>
-                                    @elseif($item->status == "Revisi Untuk KMH")
-                                        <span class="label label-warning">Revisi Diterima</span>
-                                    @elseif($item->status == "Ditolak KMH")
-                                        <span class="label label-danger">Proposal Ditolak</span>
-                                    @endif    
-                                </td>
-                                <td>
-                                    @if ($item->status == "Diteruskan ke KMH")
-                                        <a class="btn btn-sm btn-success" data-id-tinjau="{{$item->id}}" id="tinjau" style="color:white">Tinjau</a>
-                                        <a class="btn btn-sm btn-warning disabled">Batal</a>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <a class="btn btn-sm btn-success" data-id-setujui="{{$item->id}}" id="setujui" style="color:white">Setujui</a>
-                                        <a class="btn btn-sm btn-warning" data-id-rev="{{$item->id}}" id="revisi" style="color:white">Revisi</a>
-                                        <a class="btn btn-sm btn-danger" data-id-tolak="{{$item->id}}" id="tolak" style="color:white">Tolak</a>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <a href="{{url('download-berkas', $item->id)}}" class="btn btn-sm btn-info">Lihat Berkas</a>
-                                    @elseif($item->status == "Direvisi KMH")
-                                        <button class="btn btn-sm btn-success disabled">Setujui</button>
-                                        <button class="btn btn-sm btn-warning disabled">Revisi</button>
-                                        <button class="btn btn-sm btn-danger disabled">Tolak</button>
-                                    @elseif($item->status == "Revisi Untuk KMH")
-                                        <a class="btn btn-sm btn-success" data-id-setujui="{{$item->id}}" id="setujui" style="color:white">Setujui</a>
-                                        <a class="btn btn-sm btn-warning" data-id-rev="{{$item->id}}" id="revisi" style="color:white">Revisi</a>
-                                        <a class="btn btn-sm btn-danger" data-id-tolak="{{$item->id}}" id="tolak" style="color:white">Tolak</a>
-                                    @elseif($item->status == "Ditolak KMH")
-                                        <button class="btn btn-sm btn-success disabled">Setujui</button>
-                                        <button class="btn btn-sm btn-warning disabled">Revisi</button>
-                                        <button class="btn btn-sm btn-danger disabled">Tolak</button>
-                                    @endif
+                                <td style="font-weight:bold">{{$item->no_pengajuan}}</td>
+                                <td>{{$item->judul}}</td>
+                                <td>{{$item->pic}}</td>
+                                <td>{{$item->nama_status}}</td>
                             </tr>
                         <?php $no++; ?>
                         @endforeach

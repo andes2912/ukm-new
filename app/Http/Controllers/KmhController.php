@@ -113,7 +113,11 @@ class KmhController extends Controller
     public function progjakmha()
     {
         if (Auth::user()->auth == "KMH") {
-            $aktif = pengajuan::whereIn('status',['Diteruskan ke KMH','Ditinjau KMH','Disetujui KMH','Direvisi KMH','Revisi Untuk KMH','Ditolak KMH'])->get();
+            $aktif = pengajuan::selectRaw('pengajuans.*,a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->whereIn('id_status',['P10','P20'])
+            ->get();
             return view('modul_kmh.progja.aktif', compact('aktif'));
         } else {
             return redirect('/home');

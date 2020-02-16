@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\pengajuan;
 use App\anggota;
-use Storage;
+use App\catatan;
 use Auth;
 
 class BemController extends Controller
@@ -131,13 +131,42 @@ class BemController extends Controller
             $baru = pengajuan::selectRaw('pengajuans.*, a.nama as pic,b.name as nama_status')
             ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
             ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
-            ->where('id_status','B101')->get();
+            ->whereIn('id_status',['B101','P100'])->get();
             return view('modul_bem.progja.baru', compact('baru'));
         } else {
             return redirect('home');
         }
     }
 
+    // Modul Program Revisi
+    public function bemreivisi(Request $request, $id)
+    {
+        if (auth::user()->auth == "BEM") {
+            $revisi = pengajuan::selectRaw('pengajuans.*,a.name,a.email')
+            ->leftJoin('users as a','a.id_user','=','pengajuans.iduser')
+            ->first();
+            return view('modul_bem.progja.revisi', compact('revisi'));
+        }
+    }
+
+    // Program Revisi Store
+    public function bemrevisistore(Request $request)
+    {
+        if (auth::user()->auth == "BEM") {
+            $revisi = new catatan;
+            $revisi->id_pengajuan = $request->id_pengajuan;
+            $revisi->catatan = $request->catatan;
+            $revisi->id_status = 'P100';
+            $revisi->iduser = auth::user()->id_user;
+            if ($revisi->save()) {
+                $rev = pengajuan::find($request->id_pengajuan);
+                $rev->update([
+                    'id_status' => 'P100'
+                ]);
+            }
+            return redirect('progja-bem-new');
+        }
+    }
 
     // Setujui Program Kerja ke KMH
     public function setujuiBem(Request $request)
@@ -215,12 +244,11 @@ class BemController extends Controller
     public function tolakbem()
     {
         if (Auth::user()->auth == "BEM") {
-            $tolak = pengajuan::where('status','arsip')->get();
+            $tolak = pengajuan::where('id_status','P1001')->get();
             return view('modul_bem.progja.tolak', compact('tolak'));
         } else {
             return redirect('/home');
         }
-        
     }
 
     // Hapus Program Kerja in view tolak

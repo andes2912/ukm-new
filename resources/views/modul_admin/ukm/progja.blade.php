@@ -15,7 +15,6 @@
                             <th>Program Kerja</th>
                             <th>Pengaju</th>
                             <th>Status</th>
-                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,28 +22,10 @@
                         @foreach ($progja as $item)
                             <tr style="color:black">
                                 <td>{{$no}}</td>
-                                <td style="font-weight:bold">{{$item->no_id}}</td>
+                                <td style="font-weight:bold">{{$item->no_pengajuan}}</td>
+                                <td>{{$item->judul}}</td>
                                 <td>{{$item->name}}</td>
-                                <td>{{$item->pengaju}}</td>
-                                <td>
-                                    @if ($item->status == "Diteruskan ke KMH")
-                                        <span class="label label-info">Butuh Ditinjau</span>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <a href="{{url('download-berkas', $item->id)}}" class="btn btn-sm btn-info">Lihat Berkas</a>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <span class="label label-success">Proposal Disetujui</span>
-                                    @endif    
-                                </td>
-                                <td>
-                                    @if ($item->status == "Diteruskan ke KMH")
-                                        <a class="btn btn-sm btn-success" data-id-tinjau="{{$item->id}}" id="tinjau" style="color:white">Tinjau</a>
-                                        <a class="btn btn-sm btn-warning disabled">Batal</a>
-                                    @elseif($item->status == "Ditinjau KMH")
-                                        <a class="btn btn-sm btn-success" data-id-setujui="{{$item->id}}" id="setujui" style="color:white">Setujui</a>
-                                        <a class="btn btn-sm btn-warning" data-id-tolak="{{$item->id}}" id="tolak" style="color:white">Tolak</a>
-                                    @elseif($item->status == "Disetujui KMH")
-                                        <a href="{{url('download-berkas', $item->id)}}" class="btn btn-sm btn-info">Lihat Berkas</a>
-                                    @endif
+                                <td>{{$item->nama_status}}</td>
                             </tr>
                         <?php $no++; ?>
                         @endforeach

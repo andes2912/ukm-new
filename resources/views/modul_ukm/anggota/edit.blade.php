@@ -52,7 +52,7 @@
                                 <option value="">--Pilih Status--</option>
                                 <option value="Aktif">Anggota Aktif</option>
                                 <option value="Non-Aktif">Anggota Tidak Aktif</option>
-                                <option value="Pembembing">Pembimbing/Penasehat</option>
+                                <option value="Pembimbing">Pembimbing/Penasehat</option>
                             </select>
                         </div>
                 </form>

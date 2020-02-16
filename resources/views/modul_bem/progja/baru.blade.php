@@ -28,12 +28,26 @@
                                 <td>{{$item->pic}}</td>
                                 <td>{{$item->created_at->format('d-m-y')}}</td>
                                 <td>
+                                    @if ($item->id == null)
                                     <a href="" class="btn btn-info btn-sm">Download</a>
+                                    @else
+                                    <a href="" class="btn btn-info btn-sm">Lihat Berkas</a>
+                                    @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary btn-sm text-white" data-id-setujui="{{$item->id}}" id="setujui">Setujui</a>
-                                    <a href="" class="btn btn-warning btn-sm">Revisi</a>
-                                    <a href="" class="btn btn-danger btn-sm">Tolak</a>
+                                    @if ($item->id_status == "B101")
+                                        <a class="btn btn-primary btn-sm text-white" data-id-setujui="{{$item->id}}" id="setujui">Setujui</a>
+                                        <a href="{{url('progja-bem-revisi',$item->id)}}" class="btn btn-warning btn-sm">Revisi</a>
+                                        <a href="" class="btn btn-danger btn-sm">Tolak</a>
+                                    @elseif($item->id_status == "P100")
+                                        @if ($item->id == null)
+                                            <button disabled="disabled" class="btn btn-info btn-sm">Revisi Terkirim</button>
+                                        @else
+                                            <a class="btn btn-primary btn-sm text-white" data-id-setujui="{{$item->id}}" id="setujui">Setujui</a>
+                                            <a href="{{url('progja-bem-revisi',$item->id)}}" class="btn btn-warning btn-sm">Revisi</a>
+                                            <a href="" class="btn btn-danger btn-sm">Tolak</a>
+                                        @endif
+                                    @endif
                                 </td>
                             </tr>
                         <?php $no++; ?>

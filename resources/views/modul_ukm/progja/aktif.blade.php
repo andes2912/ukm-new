@@ -17,7 +17,7 @@
                             <th>#</th>
                             <th>No Pengajuan</th>
                             <th>Program Kerja</th>
-                            <th>Penanggung Jawab</th>
+                            <th>PJ</th>
                             <th>Tgl Pengajuan</th>
                             <th>Status</th>
                             <th>Action</th>
@@ -35,11 +35,18 @@
                                 <td>{{$item->pic}}</td>
                                 <td>{{$item->created_at->format('d-m-y')}}</td>
                                 <td>{{$item->nama_status}}</td>
-                                <td>
+                                <td width="220px">
                                     @if ($item->id_status == "P00")
                                         <a class="btn btn-primary btn-sm text-white" data-id-konfirmasi="{{$item->id}}" id="konfirmasi">Konfirmasi</a>
                                     @elseif($item->id_status == "B101")
                                         <button disabled="disabled" class="btn btn-info btn-sm">Berkas Terkirim</button>
+                                    @elseif($item->id_status == "P100")
+                                        <a href="{{url('progja-ukm-revisi-pdf',$item->id)}}" target="_blank" class="btn btn-primary btn-sm"> <i class="fa fa-file-pdf-o"></i> Surat Revisi</a>
+                                        @if ($item->id == null)
+                                            <a href="{{url('progja-ukm-revisi', $item->id)}}" class="btn btn-info btn-sm">Revisi Berkas</a>
+                                        @else
+                                            <button disabled="disabled" class="btn btn-info btn-sm">Revisi Terkirim</button>
+                                        @endif
                                     @elseif($item->id_status == "P10")
                                         <a class="btn btn-info btn-sm" data-id-mulai="{{$item->id}}" id="mulai">Mulai</a>
                                     @elseif($item->id_status == "P20")
@@ -51,7 +58,6 @@
                         @endforeach
                     </tbody>
                 </table>
-                @include('modul_ukm.progja.revisi')
             </div>
         </div>
     </div>
@@ -106,49 +112,6 @@
     $(document).on('click','#batal', function () {
     var id = $(this).attr('data-id-batal');
     $.get(' {{Url("progja-ukm-b-batal")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        swal({
-            html : "Berhasil Ubah Status Diterima",
-            showConfirmButton : false,
-            type : "success",
-            timer : 1000
-        });
-        location.reload();
-    });
-    });
-
-
-    // Kirim Revisi ke BEM
-    $(document).on('click','#kirim_revisi', function () {
-    var id = $(this).attr('data-id-revisi');
-    $.get(' {{Url("kirim-revisi-bem")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        swal({
-            html : "Berhasil Ubah Status Diterima",
-            showConfirmButton : false,
-            type : "success",
-            timer : 1000
-        });
-        location.reload();
-    });
-    });
-
-    // Kirim Revisi ke KMH
-    $(document).on('click','#revisi_kmh', function () {
-    var id = $(this).attr('data-id-rev');
-    $.get(' {{Url("kirim-revisi-kmh")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
-        swal({
-            html : "Berhasil Ubah Status Diterima",
-            showConfirmButton : false,
-            type : "success",
-            timer : 1000
-        });
-        location.reload();
-    });
-    });
-
-    // Arsipkan Program Kerja
-    $(document).on('click','#arsip', function () {
-    var id = $(this).attr('data-id-arsip');
-    $.get(' {{Url("progja-ukm-hapus")}}', {'_token' : $('meta[name=csrf-token]').attr('content'),id:id}, function(resp){
         swal({
             html : "Berhasil Ubah Status Diterima",
             showConfirmButton : false,

@@ -48,18 +48,15 @@ Route::resource('admin','AdminController');
 // Modul UKM
 Route::resource('ukm','UkmController');
     // Progja
-    Route::get('progja-ukm-a','UkmController@progjaukma');
-    Route::get('progja-ukm-a-tunda','UkmController@tundaprogja');
-    Route::get('progja-ukm-b','UkmController@progjaukmb');
-    Route::get('progja-ukm-b-batal','UkmController@batalprogja');
-    Route::get('progja-ukm-t','UkmController@progjaukmt');
-    Route::get('progja-ukm-ulang','UkmController@ulangprogja');
-    Route::get('progja-ukm-hapus','UkmController@hapusprogja');
-    Route::get('kirim-revisi-bem','UkmController@revisibem');
-    Route::get('kirim-revisi-kmh','UkmController@revisikmh');
+    Route::get('progja-ukm-a','UkmController@progjaukma'); // Pengajuan Progja
     Route::get('progja-ukm-arsip-v','UkmController@arsipv');
     Route::get('progja-ukm-a-konfirmasi','UkmController@konfirmasi'); // Konfirmasi Berkas Pengajuan
     Route::get('progja-ukm-mulai','UkmController@mulai'); // Mulai Jalankan Progja
+    Route::get('progja-ukm-revisi/{id}','UkmController@revisi'); // Revisi Program Kerja
+    Route::post('program-kerja-revisi/{id}','UkmController@revisiproses'); // Proses Revisi Program kerja
+
+    // PDF
+    Route::get('progja-ukm-revisi-pdf/{id}','UkmController@revisiukm'); // View PDF Revisi
 
     // Anggota
     Route::get('anggota','UkmController@anggota');
@@ -85,6 +82,8 @@ Route::resource('bem','BemController');
     Route::get('progja-bem-revisi','BemController@revisiprogja');
     Route::get('progja-bem-tolak','BemController@tolakprogja');
     Route::get('download-progja-bem/{id}','BemController@downberkasbem');
+    Route::get('progja-bem-revisi/{id}','BemController@bemreivisi');
+    Route::post('progja-bem-revisi-store','BemController@bemrevisistore');
 
     Route::get('progja-bem-new','BemController@bemnew');
     Route::get('progja-bem-a-setujui','BemController@setujuiBem');

@@ -126,7 +126,10 @@ class AdminController extends Controller
 
     public function adminprogja()
     {
-        $progja = pengajuan::whereIn('status',['Diteruskan ke KMH','Ditinjau KMH','Disetujui KMH'])->get();
+        $progja = pengajuan::selectRaw('pengajuans.id,pengajuans.no_pengajuan,pengajuans.judul,pengajuans.iduser,pengajuans.id_status,a.name,b.name as nama_status')
+        ->leftJoin('users as a','a.id_user','=','pengajuans.iduser')
+        ->leftjoin('statuses as b','b.status_id','=','pengajuans.id_status')
+        ->get();
         return view('modul_admin.ukm.progja', compact('progja'));
     }
 

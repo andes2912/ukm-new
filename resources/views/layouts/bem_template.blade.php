@@ -19,6 +19,8 @@
     <link href="{{asset('asset/css/colors/blue.css')}}" id="theme" rel="stylesheet">
     <link href="{{asset('asset/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
     {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script> --}}
+    <!-- wysihtml5 CSS -->
+    <link rel="stylesheet" href="{{asset('asset/plugins/html5-editor/bootstrap-wysihtml5.css')}}" />
     <!-- Morries chart CSS -->
     <link href="{{asset('asset/plugins/morrisjs/morris.css')}}" rel="stylesheet">
     <!-- chartist CSS -->
@@ -386,6 +388,8 @@
     <script src="{{asset('asset/plugins/sparkline/jquery.sparkline.min.js')}}"></script>
     <!--Custom JavaScript -->
     <script src="{{asset('asset/js/custom.min.js')}}"></script>
+    <script src="{{asset('asset/plugins/html5-editor/wysihtml5-0.3.0.js')}}"></script>
+    <script src="{{asset('asset/plugins/html5-editor/bootstrap-wysihtml5.js')}}"></script>
     <!-- This is data table -->
     <script src="{{asset('asset/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <!--morris JavaScript -->
@@ -438,6 +442,12 @@
                 }
             });
         });
+        });
+
+        $(document).ready(function() {
+
+            $('.textarea_editor').wysihtml5();
+
         });
     </script>
 

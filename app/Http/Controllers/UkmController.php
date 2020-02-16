@@ -5,7 +5,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\pengajuan;
 use App\Anggota;
+use App\catatan;
+use App\berkasrev;
 use Auth;
+use PDF;
 use carbon\carbon;
 
 class UkmController extends Controller
@@ -155,6 +158,21 @@ class UkmController extends Controller
         }
     }
 
+    // View Program Kerja Revisi - PDF
+    public function revisiukm(Request $request)
+    {
+        if (auth::user()->auth == "UKM") {
+            $revisi = pengajuan::selectRaw('pengajuans.*')
+            ->leftJoin('catatans as a','a.id_pengajuan','=','pengajuans.id')
+            ->where('pengajuans.id', $request->id)
+            ->where('pengajuans.iduser',auth::user()->id_user)
+            ->first();
+            
+            $pdf = PDF::loadView('modul_ukm.progja.revisi', compact('revisi'))->setPaper('a4', 'potrait');
+            return $pdf->stream(); 
+        }
+    }
+
     // Konfirmasi Program Kerja Pengajuan
     public function konfirmasi(Request $request)
     {
@@ -162,7 +180,6 @@ class UkmController extends Controller
         $konfirmasi->update([
             'id_status' => 'B101',
         ]);
-
         return $konfirmasi;
     }
 
@@ -191,33 +208,6 @@ class UkmController extends Controller
         }
     }
 
-    // Index Program Kerja Ditunda
-    public function progjaukmt()
-    {
-        if (Auth::user()->auth == "UKM") {
-            $tunda = pengajuan::where('pengaju',Auth::user()->name)
-            ->where('status','Ditunda')
-            ->get();
-            return view('modul_ukm.progja.tunda', compact('tunda'));
-        } else {
-            return redirect('/home');
-        }
-        
-    }
-
-    // Tunda Program Kerja
-    public function tundaprogja(Request $request)
-    {
-        if (Auth::user()->auth == "UKM") {
-            $tunda = pengajuan::find($request->id);
-        $tunda->update([
-            'status' => 'Ditunda',
-        ]);
-        return $tunda;
-        } else {
-            return redirect('/home');
-        }
-    }
 
     // Batal Program Kerja
     public function batalprogja(Request $request)
@@ -248,60 +238,6 @@ class UkmController extends Controller
        }
     }
 
-    // Program Kerja Dihapus/arsipkan
-    public function hapusprogja(Request $request)
-    {
-       if (Auth::user()->auth == "UKM") {
-            $tunda = pengajuan::find($request->id);
-            $tunda->update([
-                'status' => 'arsip',
-            ]);
-            return $tunda;
-       } else {
-            return redirect('/home');
-       }
-    }
-
-    // Revisi Program kerja ke BEM
-    public function revisibem(Request $request)
-    {
-        if (Auth::user()->auth == "UKM") {
-            $revisi = pengajuan::find($request->id);
-            $revisi->update([
-                'status' => 'Revisi Untuk BEM',
-            ]);
-            return $revisi;
-        } else {
-            return redirect('/home');
-        }
-    }
-
-    // Revisi Program kerja ke BEM
-    public function revisikmh(Request $request)
-    {
-       if (Auth::user()->auth == "UKM") {
-            $revisi = pengajuan::find($request->id);
-            $revisi->update([
-                'status' => 'Revisi Untuk KMH',
-            ]);
-            return $revisi;
-       } else {
-           return redirect('/home');
-       }
-    }
-
-    
-    //  View Program Kerja Arsip
-    public function arsipv()
-    {
-        if (Auth::user()->auth == "UKM") {
-            $arsip = pengajuan::where('status','arsip')->get();
-            return view('modul_ukm.progja.arsip', compact('arsip'));
-        } else {
-            return redirect('/home');
-        }
-        
-    }
 
 // Modul Anggota UKM
 
@@ -439,5 +375,42 @@ class UkmController extends Controller
             return redirect('/home');
         }
         
+    }
+
+    // Revisi Program kerja
+    public function revisi(Request $request, $id)
+    {
+        if (auth::user()->auth == "UKM") {
+            $revisi = pengajuan::selectRaw('pengajuans.*, a.nama as pic,b.name as nama_status')
+            ->leftJoin('anggotas as a','a.id','=','pengajuans.pic')
+            ->leftJoin('statuses as b','b.status_id','=','pengajuans.id_status')
+            ->where('iduser',auth::user()->id_user)
+            ->find($id);
+
+            return view('modul_ukm.progja.revisi', compact('revisi'));
+        }
+    }
+
+    // Revisi Program kerja - Proses
+    public function revisiproses(Request $request)
+    {
+        if (auth::user()->auth == "UKM") {
+            
+            $berkas = $request->file('berkas_revisi');
+            $nama_file = time()."_".$berkas->getClientOriginalName();
+            // isi dengan nama folder tempat kemana file diupload
+            $tujuan_upload = 'berkas_revisi';
+            $berkas->move($tujuan_upload,$nama_file);
+
+            berkasrev::create([
+                'id_pengajuan'  => $request->id_pengajuan,
+                'iduser'       => auth::user()->id_user,
+                'id_status'     => 'B101',
+                'berkas_revisi' => $nama_file,
+            ]);
+            
+
+            return redirect()->back();
+        }
     }
 }
